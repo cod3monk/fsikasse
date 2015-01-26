@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+  <form action="{{ url_for('add_user') }}" method="post" class="add-entry" enctype="multipart/form-data">
+    <dl>
+      <dt>Name:
+      <dd><input type="text" size="15" name="name">
+      <dt>Mail:
+      <dd><input type="text" size="30" name="mail">
+      <dt>Image:
+      <dd><input type="file" name="image">
+      <dd><input type="submit" value="Update Userdata">
+    </dl>
+  </form>
+{% endblock %}

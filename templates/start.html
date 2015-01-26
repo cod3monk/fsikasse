@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="users-list">
+    {% for user in users %}
+    <a href="{{ url_for('show_userpage', username=user.name) }}"><div class="user">
+        {% if user.image_path %}
+        <img src="{{ url_for('static', filename=user.image_path) }}"></img>
+        {% endif %}
+        <span class="name">{{ user.name }}</span>
+        <span class="balance">{{ '%.2f' % (user.balance / 100.0) }} €</span>
+        </center>
+    </div></a>
+    {% else %}
+    <em>Unbelievable. No users here so far.</em></li>
+  {% endfor %}
+  <a href="{{ url_for('add_user') }}"><div class="user">
+      <span class="new">+</span>
+      <span class="name">Neuer Nutzer</span>
+  </div></a>
+</div>
+  
+<div class="bottom-big">
+    <a href="{{ url_for('show_userpage', username='Gäste') }}"><div class="guest-account">Gäste</div></a>
+   <a href="{{ url_for('show_userpage', username='Materialsammlung') }}"><div class="free-account">Materialsammlung</div></a>
+</div>
+{% endblock %}

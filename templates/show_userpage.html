@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="side">
+<a href="{{ url_for('edit_userprofile', username=user.name) }}"><div class="user">
+    {% if user.image_path %}
+    <img src="{{ url_for('static', filename=user.image_path) }}"></img>
+    {% endif %}
+    <span class="name">{{ user.name }}</span>
+    <span class="balance">{{ '%.2f' % (balance.balance / 100.0) }} €</span>
+    </center>
+</div></a>
+</div>
+
+<div class="products">
+{% for prod in products %}
+  <a href="{{ url_for('action_buy', username=user.name, valuablename=prod.name) }}">
+      <div class="prod">
+          <center>
+      {% if prod.image_path %}
+          <img src="{{ url_for('static', filename=prod.image_path) }}"></img>
+      {% else %}
+          <img src="{{ url_for('static', filename='products/placeholder.png') }}"></img>
+      {% endif %}
+      <span class="prod_name">{{ prod.name }}</span><br/>
+      <span class="price">{{ prod.price }}&cent;</span></a></div>
+          </center>
+{% else %}
+  <em>Unbelievable. No products here so far.</em>
+{% endfor %}
+</div>
+
+<div class="bottom-big">
+    <a href="{{ url_for('show_index') }}">
+        <div class="back">Zurück</div>
+    </a>
+    {% if not user.direct_payment %}
+        <div class="add_money">Einzahlen: <form action="{{ url_for('add_to_account', username=user.name) }}" method="post"><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Einzahlen"></form></div>
+        <div class="transfer_money">Geld überweisen<form action="{{ url_for('transfer_money', username=user.name) }}" method="post"><select name="to">{% for u in user_list %}<option>{{ u.name }}</option>{% endfor %}</select><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Überweisen"></form></div>
+        <div class="sub_money">Auszahlen: <form action="{{ url_for('sub_from_account', username=user.name) }}" method="post"><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Auszahlen"></form></div>
+    {% endif %}
+</div>
+{% endblock %}

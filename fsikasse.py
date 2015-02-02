@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*-
 
 import sys
-reload(sys)
-sys.setdefaultencoding('utf-8')
+
+# python3 workaround
+try:
+    reload(sys)
+    sys.setdefaultencoding('utf-8')
+except:
+    pass
+
 from sqlite3 import dbapi2 as sqlite3
 import os
 import random
@@ -13,7 +19,7 @@ from datetime import datetime
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 from werkzeug import secure_filename
-import Image
+from PIL import Image
 app = Flask(__name__)
 
 app.config.update(dict(
@@ -28,7 +34,7 @@ app.config.update(dict(
 ))
 
 def randomword(length):
-   return ''.join(random.choice(string.lowercase) for i in range(length))
+   return ''.join(random.choice(string.ascii_lowercase) for i in range(length))
 
 def connect_db():
     """Connects to the specific database."""
@@ -109,12 +115,12 @@ def action_buy(username, valuablename):
     db = get_db()
     cur = db.cursor()
     cur.execute(
-        'SELECT rowid, name, account_id, direct_payment FROM user WHERE active=1 and name=?', 
+        'SELECT rowid, name, account_id, direct_payment FROM user WHERE active=1 and name=?',
         [username])
     user = cur.fetchone()
     if not user:
         abort(404)
-    
+
     cur.execute('SELECT rowid, price FROM valuable WHERE product=1 and name=?', [valuablename])
     valuable = cur.fetchone()
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
@@ -125,7 +131,7 @@ def action_buy(username, valuablename):
     else:
         cur.execute('INSERT INTO transfer (from_id, to_id, valuable_id, amount, transaction_id) VALUES  (?, ?, ?, ?, ?)', [None, app.config['CASH_IN_ACCOUNT'][0], app.config['MONEY_VALUABLE_ID'], valuable['price'], transaction_id])
     db.commit()
-    
+
     if user['direct_payment']:
         flash('Bitte {:.2f} &euro; in die graue Kasse legen.'.format(valuable['price']/100.0))
     else:
@@ -137,24 +143,24 @@ def transfer_money(username):
     db = get_db()
     cur = db.cursor()
     cur.execute(
-        'SELECT rowid, name, account_id FROM user WHERE active=1 and direct_payment=0 and name=?', 
+        'SELECT rowid, name, account_id FROM user WHERE active=1 and direct_payment=0 and name=?',
         [username])
     user = cur.fetchone()
     cur.execute(
-        'SELECT rowid, name, account_id FROM user WHERE active=1 and direct_payment=0 and name=?', 
+        'SELECT rowid, name, account_id FROM user WHERE active=1 and direct_payment=0 and name=?',
         [request.form['to']])
     to_user = cur.fetchone()
     if not user or not to_user:
         abort(404)
-    
+
     amount = int(float(request.form['amount'])*100)
-    
+
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
     cur.execute('INSERT INTO transfer (from_id, to_id, valuable_id, amount, transaction_id) VALUES  (?, ?, ?, ?, ?)',
         [user['account_id'], to_user['account_id'], app.config['MONEY_VALUABLE_ID'], amount, transaction_id])
     db.commit()
-    
+
     flash('Geld wurde überwiesen.')
     return redirect(url_for('show_index'))
 
@@ -168,7 +174,7 @@ def edit_userprofile(username):
     user = cur.fetchone()
     if not user:
         abort(404)
-    
+
     if request.method == 'GET':
         cur = db.execute(
             'SELECT valuable_name, balance, unit_name FROM account_valuable_balance WHERE account_id=?',
@@ -182,10 +188,10 @@ def edit_userprofile(username):
     else:  # request.method == 'POST':
         if not user['allow_edit_profile']:
             abort(403)
-        
+
         cur.execute('UPDATE account SET name=? WHERE rowid = ?',
                    [request.form['name'], user['account_id']])
-        
+
         filename = user['image_path']
         if request.files['image']:
             # Replace image
@@ -193,20 +199,20 @@ def edit_userprofile(username):
             assert image and allowed_file(image.filename), \
                 "No image given or invalid filename/extension."
             filename = 'users/'+randomword(10)+'_'+secure_filename(image.filename)
-        
+
             # Resizing image with PIL
             im = Image.open(image)
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-        
+
         cur.execute('UPDATE user SET name=?, mail=?, image_path=? WHERE name=?',
                    [request.form['name'], request.form['mail'], filename, username])
         db.commit()
-        
+
         if request.files['image'] and user['image_path']:
             # Remove old profile image
             os.unlink(os.path.join(app.config['UPLOAD_FOLDER'], user['image_path']))
-        
+
         return redirect(url_for('edit_userprofile', username=request.form['name']))
 
 @app.route('/user/add', methods=['POST', 'GET'])
@@ -218,18 +224,18 @@ def add_user():
         cur = db.cursor()
         cur.execute('INSERT INTO account (name) VALUES (?)',
                    [request.form['name']])
-        
+
         image = request.files['image']
         if image and allowed_file(image.filename):
             filename = 'users/'+randomword(10)+'_'+secure_filename(image.filename)
-        
+
             # Resizing image with PIL
             im = Image.open(image)
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
             filename = None
-        
+
         cur.execute('INSERT INTO user (name, mail, account_id, image_path) VALUES (?, ?, ?, ?)',
                    [request.form['name'], request.form['mail'], cur.lastrowid, filename])
         db.commit()
@@ -242,12 +248,12 @@ def add_to_account(username):
     cur.execute('SELECT account_id FROM user WHERE active=1 AND name=? AND direct_payment=0',
         [username])
     user = cur.fetchone()
-    
+
     if not user:
         abort(404)
-    
+
     amount = int(float(request.form['amount'])*100)
-    
+
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
     cur.execute(
@@ -260,7 +266,7 @@ def add_to_account(username):
         [None, app.config['CASH_IN_ACCOUNT'][0], app.config['MONEY_VALUABLE_ID'], amount, transaction_id])
     db.commit()
     flash(u'Danke für das Geld :)')
-    
+
     return redirect(url_for('show_index'))
 
 @app.route('/user/<username>/sub', methods=['POST'])
@@ -270,12 +276,12 @@ def sub_from_account(username):
     cur.execute('SELECT account_id FROM user WHERE active=1 AND name=? AND direct_payment=0',
         [username])
     user = cur.fetchone()
-    
+
     if not user:
         abort(404)
-    
+
     amount = int(float(request.form['amount'])*100)
-    
+
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
     cur.execute(
@@ -288,7 +294,7 @@ def sub_from_account(username):
         [app.config['CASH_IN_ACCOUNT'][0], None, app.config['MONEY_VALUABLE_ID'], amount, transaction_id])
     db.commit()
     flash(u'Geld wurde abgezogen.')
-    
+
     return redirect(url_for('show_index'))
 
 @app.route('/user/<username>/cancel/<int:transaction_id>')
@@ -298,15 +304,15 @@ def cancle_transaction(username, transaction_id):
     cur.execute('SELECT account_id FROM user WHERE active=1 AND name=? AND direct_payment=0',
         [username])
     user = cur.fetchone()
-    
+
     if not user:
         abort(404)
-    
+
     cur.execute(
         'SELECT from_id, to_id, valuable_id, amount FROM transfer WHERE transaction_id = ?',
         [transaction_id])
     transfers = cur.fetchall()
-    
+
     cur.execute('INSERT INTO `transaction` (datetime, comment) VALUES (?, ?)',
         [datetime.now(), 'Storno von '+str(transaction_id)+' durch '+username])
     cancle_transaction_id = cur.lastrowid
@@ -316,7 +322,7 @@ def cancle_transaction(username, transaction_id):
                 'VALUES  (?, ?, ?, ?, ?)',
             [t['to_id'], t['from_id'], t['valuable_id'], t['amount'], cancle_transaction_id])
     db.commit()
-    
+
     flash('Buchung wurde storniert.')
     return redirect(url_for('edit_userprofile', username=username))
 

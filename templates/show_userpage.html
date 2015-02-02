@@ -1,43 +1,67 @@
 {% extends "layout.html" %}
 {% block body %}
 
+<h1 class="header">Getränkeliste:</h1>
+
 <div class="side">
-<a href="{{ url_for('edit_userprofile', username=user.name) }}"><div class="user">
-    {% if user.image_path %}
-    <img src="{{ url_for('static', filename=user.image_path) }}"></img>
+  <a href="{{ url_for('edit_userprofile', username=user.name) }}">
+    <div class="user" style="height:auto;">
+      {% if user.image_path %}
+      <img src="{{ url_for('static', filename=user.image_path) }}" />
+      {% else %}
+      <img src="/static/dummy-user.svg" />
+      {% endif %}
+      <span class="name">{{ user.name }}</span>
+    </div>
+  </a>
+  <ul>
+    {% if not user.direct_payment %}
+    <li>Einzahlen:
+      <form action="{{ url_for('add_to_account', username=user.name) }}" method="post">
+        <input type="number" min="0" max="100" step="0.01" size="6" name="amount" value="0.00">
+        <input type="submit" value="Einzahlen"/>
+      </form>
+    </li>
+    <li>Geld überweisen:
+      <form action="{{ url_for('transfer_money', username=user.name) }}" method="post">
+        <select name="to">
+          {% for u in user_list %}
+          <option>{{ u.name }}</option>
+          {% endfor %}
+        </select>
+        <input type="number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
+        <input type="submit" value="Überweisen" />
+      </form>
+    </li>
+    <li>Auszahlen:
+      <form action="{{ url_for('sub_from_account', username=user.name) }}" method="post">
+        <input type="number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
+        <input type="submit" value="Auszahlen" />
+      </form>
+    </li>
     {% endif %}
-    <span class="name">{{ user.name }}</span>
-    <span class="balance">{{ '%.2f' % (balance.balance / 100.0) }} €</span>
-    </center>
-</div></a>
+  </ul>
 </div>
 
 <div class="products">
 {% for prod in products %}
   <a href="{{ url_for('action_buy', username=user.name, valuablename=prod.name) }}">
-      <div class="prod">
-          <center>
+    <div class="prod">
       {% if prod.image_path %}
-          <img src="{{ url_for('static', filename=prod.image_path) }}"></img>
+      <img src="{{ url_for('static', filename=prod.image_path) }}" />
       {% else %}
-          <img src="{{ url_for('static', filename='products/placeholder.png') }}"></img>
+      <img src="{{ url_for('static', filename='products/placeholder.png') }}" />
       {% endif %}
-      <span class="prod_name">{{ prod.name }}</span><br/>
-      <span class="price">{{ prod.price }}&cent;</span></a></div>
-          </center>
+      <span class="prod_name">{{ prod.name }}</span>
+      <span class="price">{{ prod.price }}&cent;</span>
+    </div>
+  </a>
 {% else %}
   <em>Unbelievable. No products here so far.</em>
 {% endfor %}
 </div>
 
-<div class="bottom-big">
-    <a href="{{ url_for('show_index') }}">
-        <div class="back">Zurück</div>
-    </a>
-    {% if not user.direct_payment %}
-        <div class="add_money">Einzahlen: <form action="{{ url_for('add_to_account', username=user.name) }}" method="post"><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Einzahlen"></form></div>
-        <div class="transfer_money">Geld überweisen<form action="{{ url_for('transfer_money', username=user.name) }}" method="post"><select name="to">{% for u in user_list %}<option>{{ u.name }}</option>{% endfor %}</select><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Überweisen"></form></div>
-        <div class="sub_money">Auszahlen: <form action="{{ url_for('sub_from_account', username=user.name) }}" method="post"><input type="number" min="0" max="100" step="0.01" size="6" name="amount" value=><input type="submit" value="Auszahlen"></form></div>
-    {% endif %}
+<div class="footer">
+  <a href="{{ url_for('show_index') }}" class="back">zurück</a>
 </div>
 {% endblock %}

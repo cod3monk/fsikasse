@@ -1,15 +1,24 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+{% if error %}<p class="error"><strong>Error:</strong> {{ error }}</p>{% endif %}
+
+<h1 class="header">Benutzer hinzufügen:</h1>
+
+<div class="add_user">
   <form action="{{ url_for('add_user') }}" method="post" class="add-entry" enctype="multipart/form-data">
     <dl>
-      <dt>Name:
-      <dd><input type="text" size="15" name="name">
-      <dt>Mail:
-      <dd><input type="text" size="30" name="mail">
-      <dt>Image:
-      <dd><input type="file" name="image">
-      <dd><input type="submit" value="Update Userdata">
+      <dt>Name:</dt>
+      <dd><input class="form_input" type="text" size="30" name="name" /></dd>
+      <dt>Mail:</dt>
+      <dd><input class="form_input" type="text" size="30" name="mail" /></dd>
+      <dt>Image:</dt>
+      <dd><input class="form_file" type="file" name="image" /></dd>
+      <dd><input class="form_submit" type="submit" value="Submit New Userdata" /></dd>
     </dl>
   </form>
+</div>
+
+<div class="footer">
+  <a href="{{ url_for('show_index') }}" class="back">zurück</a>
+</div>
 {% endblock %}

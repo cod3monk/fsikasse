@@ -1,166 +1,410 @@
 body {
-	font-family: sans-serif;
+	font-family: 'Open Sans', sans-serif;
 	margin: 0;
 	padding: 0;
-	height: 100%;
-	width: 100%;
-	max-height: 768px;
-	max-width: 1024px;
+	width: 1024px;
+	height: 768px;
+	background: white;
+	color: #2e3436;
+/*	border-right: 1px solid red;
+	border-bottom: 1px solid red;*/
 }
 
-div.screen {
+h1 {
+	margin: 0;
+	padding: 0 20px;
+	background-image: -webkit-linear-gradient(90deg,#f8f8f8,#e0e0e0);
+	background-image: -moz-linear-gradient(90deg,#f8f8f8,#e0e0e0);
+	border-bottom: 1px solid rgb(161,161,161);
+	color: #2e3436;
+	font-size: 20pt;
+	line-height: 50px;
+	height: 50px;
+	position: absolute
+	top: 0;
+}
+
+h2 {
+	padding-left: 20px;
+}
+
+div.footer {
+	height: 50px;
+	width: 1024px;
+	position: absolute;
+	top: 716px;
 	margin: 0;
 	padding: 0;
-	height: 100%;
-	width: 100%;
+	background: white;
+	border-top: 1px solid rgb(161,161,161);
+}
+
+div.footer .back
+{
+	background: url("/static/back.svg") 0px 7px no-repeat;
+	padding-left: 20px;
+	margin-left: 10px;
+	color: #2e3436;
+	font-size: 20px;
+	line-height: 50px;
+}
+
+div.footer .back:hover
+{
+	text-decoration: underline;
 }
 
 a {
 	text-decoration: none;
-	color: navy;
 }
 
 .users-list {
-	height:  100%;
-	width: 100%;
+	position: absolute;
+	background: white;
+	height: 666px;
+	overflow-x: scroll;
+	overflow-y: scroll;
 }
 
 div.user {
-	min-width: 100px;
 	float: left;
-	height: calc(150px + 2.5em);
-	margin: 5px;
-	position: relative;
+	width: 150px;
+	height: calc(200px + 25px + 25px );
+	margin: 10px;
+	padding: 5px;
+	border: 1px solid rgba(0,0,0,0.8);
+	border-radius: 5px;
+	background: rgba(0,0,0,0.8);
 }
 
 div.user .name {
-   position: absolute;
-   bottom: 1.2em;
-   text-align: center;
-   width: 100%;
-   display: block;
-   word-wrap: break-word;
+	text-align: center;
+	width: 100%;
+	max-height: 25px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 18px;
+	line-height: 25px;
+	color: rgba(255,255,255,0.8);
+	font-weight: bold;
+}
+
+div.side .user .name {
+	max-height: 300px;
+	overflow: auto;
+	text-overflow: clip;
+	white-space: normal;
 }
 
 div.user .balance {
-   position: absolute;
-   bottom: 0;
-   right: 0;
+	float: right;
+	color: orange;
+	font-size: 16px;
+	line-height: 25px;
+	display: block;
+	position:relative;
+}
+
+div.user span.user-image {
+	display: block;
+	width: 150px;
+	height: 200px;
 }
 
 div.user img {
-	width: auto;
-	height: 150px;
-	position: relative;
 	display: block;
+	width: 150px;
+	height: 200px;
 	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.2)));
 }
 
 div.user span.new {
 	display: block;
-	width: 100%;
-	height: 150px;
+	width: auto;
+	height: auto;
 	font-size: 100px;
 	text-align: center;
-	top: 10%;
-	position: relative;
+	color: rgba(255,255,255,0.8);
+}
+
+div.side {
+	width: 182px;
+	height: 651px;
+	float: left;
+	background-color: #fafafa;
+	border-right: 1px solid rgb(161,161,161);
+	padding: 10px 5px 5px 5px;
+}
+
+div.side ul {
+	margin: 0;
+	padding: 0;
+}
+
+div.side ul li
+{
+	list-style-type: none;
+	display: block;
+	float:left;
+	padding: 0 5px;
+	margin: 0;
+	font-size: 20px;
+	line-height: 30px;
+	margin-bottom: 20px;
+}
+
+div.side ul li form
+{
+	margin: 0;
+	padding: 0;
+	display: block;
+	width: 172px;
+}
+
+select {
+	display: block;
+	width: 172px;
+	height: 35px;
+	margin: 5px 0 5px 0px;
+	font-size: 14px;
+}
+
+input[type="number"],
+input[type="text"] {
+	float: left;
+	display: block;
+	width: 65px;
+	height: 33px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	font-size: 14px;
+	border: 1px solid rgb(161,161,161);
+	border-radius: 2px;
+	color: #2e3436;
+}
+
+input[type="submit"] {
+	float: right;
+	display: block;
+	width: 100px;
+	height: 35px;
+	padding: 0;
+	margin: 0;
+	text-align: center;
+	font-size: 14px;
+	color: #2e3436;
+}
+
+.input_update {
+	width: 172px !important;
+}
+
+input[type="text"] {
+	width: 100%;
+}
+
+div.side .change_info .form_input {
+	width: 172px;
+}
+
+div.side .change_info .form_button {
+	width: 172px;
+	float: left;
+}
+
+div.side .change_info span {
+	display: block;
+	margin-bottom: 20px;
+}
+
+div.main_wrapper {
+	width: 1024px;
+	height: 666px;
+	float:right;
+	padding: 0;
+	margin: 0;
+	display: block;
+	overflow-y: scroll;
 }
 
 div.products {
-	width: 100%;
-	
+	width: 831px;
+	height: 666px;
+	float:right;
+	padding: 0;
+	margin: 0;
+	display: block;
+	overflow-y: scroll;
+}
+
+div.main_wrapper .user {
+	margin: 10px 15px;
 }
 
 div.prod {
-	min-width: 100px;
 	float: left;
-	height: calc(300px + 2.5em);
-	margin: 5px;
-	position: relative;
+	width: 150px;
+	height: calc(230px + 10px +10px + 25px + 25px );
+	margin: 10px 20px;
+	padding: 5px;
+	border: 1px solid rgba(0,0,0,0.8);
+	border-radius: 5px;
+	background: rgba(0,0,0,0.8);
 }
 
 .prod img {
 	width:  auto;
-	height:  300px;
-	position: relative;
+	height:  230px;
 	display: block;
-	margin-bottom: .5em;
-	
+	margin: 0 auto;
 	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, 0.2)));
 }
 
-div.side {
-	left: 0;
-	min-width: 150px;
-	min-height: 800px;
-	height: 100%;
-	float: left;
+div.prod .prod_name {
+	text-align: center;
+	width: 100%;
+	display: block;
+	word-wrap: break-word;
+	font-size: 18px;
+	line-height: 25px;
+	color: rgba(255,255,255,0.8);
+	font-weight: bold;
+}
+
+div.prod .price {
+	float: right;
+	color: white;
+	font-size: 22px;
+	line-height: 25px;
+	display: block;
+}
+
+.products .balance,
+.products .history {
+	font-size: 16px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	margin-right: 20px;
+	border: 1px solid rgb(161,161,161);
+	max-width: 791px;
+}
+
+.products .balance .number,
+.products .history .number {
+	text-align: right;
+}
+
+.products .balance td,
+.products .history td {
+	padding: 5px;
+	border: 1px solid rgb(161,161,161);
 }
 
 div.bottom-big {
-	height: 68px;
-	width: calc(100% - 20px);
-	padding: 10px;
-	bottom: 0;
-	margin: 0;
-	background-color: #ebb0ff;
+	width: 100%;
 	position: absolute;
+	bottom: 0;
+	padding: 10px 0;
+	margin: 0;
+}
+
+div.bottom-big div.guest-account,
+div.bottom-big div.free-account {
+	font-size: 22pt;
+	margin: 0;
+	padding: 15px 30px;
+	border: 1px solid rgba(0,0,0,0.8);
+	border-radius: 5px;
+	background: rgba(0,0,0,0.8);
+	color: white;
 }
 
 div.bottom-big div.guest-account {
 	float: left;
-	width: 80%;
-	height: 100%;
-	text-align: center;
-	font-size: 50px;
-	vertical-align: middle;
+	margin-left: 20%;
 }
 
 div.bottom-big div.free-account {
 	float: right;
-	width: 20%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
+	margin-right: 20%;
 }
 
-div.bottom-big div.add_money {
+div.add_user {
+	width: 432px;
+	height: 300px;
+	padding: 10px;
+	margin: 50px auto;
+	border: 1px solid rgba(0,0,0,0.8);
+	border-radius: 5px;
+	background: rgba(0,0,0,0.8);
+}
+
+div.add_user dl dt {
+	color: white;
+	font-size: 16px;
+	line-height: 35px;
+	width: 105px;
+	display: block;
 	float: left;
-	width: 30%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
+	margin: 5px 0;
 }
 
-div.bottom-big div.sub_money {
+div.add_user dl dd {
+	color: black;
+	font-size: 22pt;
+	display: block;
+	line-height: 35px;
+	height: 35px;
+	width: 307px;
 	float: right;
-	width: 30%;
-	height: 100%;
-	text-align: center;
-	vertical-align: middle;
+	margin: 5px 0;
+	padding: 0;
 }
 
-div.bottom-big div.transfer_money {
+div.add_user dl dd .form_input {
+	width: 307px;
+}
+
+div.add_user dl dd .form_submit {
 	float: right;
-	width: 30%;
-	height: 100%;
+	display: block;
+	width: 100%;
+	height: 35px;
+	padding: 0;
+	margin: 0;
+	margin-top: 15px;
 	text-align: center;
-	vertical-align: middle;
+	font-size: 14px;
+	color: #2e3436;
 }
 
-div.bottom-big div.back {
-	float: left;
-	width: 10%;
-	height: 100%;
+div.add_user dl dd input[type="file"] {
+	display: block;
+	height: 35px;
+	line-height: 35px;
+	width: 307px;
+	padding: 0;
+	margin: 0;
 	text-align: center;
-	vertical-align: middle;
+	font-size: 14px;
+	color: #2e3436;
 }
 
 .flash {
 	background: #CEE5F5;
-	padding: 0.5em;
-	border: 1px solid #AACBE2;
-	
+	border-bottom: 1px solid #AACBE2;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	margin: 0;
+	padding: 0 20px;
+	font-size: 20pt;
+	line-height: 40px;
+	height: 40px;
+	float: right;
 }
 
 .error {

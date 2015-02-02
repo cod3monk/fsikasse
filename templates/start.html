@@ -1,24 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
-<div class="users-list">
+
+<h1 class="header">Benutzerübersicht:</h1>
+
+<div class="main_wrapper">
+
+<div id="users-list">
     {% for user in users %}
-    <a href="{{ url_for('show_userpage', username=user.name) }}"><div class="user">
-        {% if user.image_path %}
-        <img src="{{ url_for('static', filename=user.image_path) }}"></img>
-        {% endif %}
+    <a href="{{ url_for('show_userpage', username=user.name) }}">
+      <div class="user">
+        <span class="user-image">
+          {% if user.image_path %}
+          <img src="{{ url_for('static', filename=user.image_path) }}" />
+          {% else %}
+          <img src="/static/dummy-user.svg" />
+          {% endif %}
+        </span>
         <span class="name">{{ user.name }}</span>
         <span class="balance">{{ '%.2f' % (user.balance / 100.0) }} €</span>
-        </center>
-    </div></a>
+      </div>
+    </a>
     {% else %}
     <em>Unbelievable. No users here so far.</em></li>
   {% endfor %}
   <a href="{{ url_for('add_user') }}"><div class="user">
-      <span class="new">+</span>
+        <span class="user-image">
+          <img src="/static/add.svg" />
+          <!-- <span class="new">+</span> -->
+        </span>
       <span class="name">Neuer Nutzer</span>
+      <span class="balance"></span>
   </div></a>
 </div>
-  
+
+</div>
+
 <div class="bottom-big">
     <a href="{{ url_for('show_userpage', username='Gäste') }}"><div class="guest-account">Gäste</div></a>
    <a href="{{ url_for('show_userpage', username='Materialsammlung') }}"><div class="free-account">Materialsammlung</div></a>

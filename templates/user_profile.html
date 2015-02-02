@@ -1,41 +1,85 @@
 {% extends "layout.html" %}
 {% block body %}
-<h2>User: {{ user.name }}</h2>
-{% if user.image_path %}
-<img src="{{ url_for('static', filename=user.image_path) }}"></img>
-{% endif %}
 
-<form action="{{ url_for('edit_userprofile', username=user.name) }}" method="post" class="add-entry" enctype="multipart/form-data">
-    <dl>
-      <dt>Name:
-      <dd><input type="text" size="15" name="name" value="{{ user.name }}">
-      <dt>Mail:
-      <dd><input type="text" size="30" name="mail" value="{{ user.mail }}">
-      <dt>Image:
-      <dd><input type="file" name="image">
-      <dd><input type="submit" value="Update Profile">
-    </dl>
+<h1 class="header">Benutzerprofil: {{ user.name }}</h1>
+
+<div class="side">
+  <a href="{{ url_for('edit_userprofile', username=user.name) }}">
+    <div class="user" style="height:auto;">
+      {% if user.image_path %}
+      <img src="{{ url_for('static', filename=user.image_path) }}" />
+      {% else %}
+      <img src="/static/dummy-user.svg" />
+      {% endif %}
+      <span class="name">{{ user.name }}</span>
+    </div>
+  </a>
+
+  <form action="{{ url_for('edit_userprofile', username=user.name) }}" method="post" enctype="multipart/form-data">
+   <ul class="change_info">
+    <li>Name ändern:<input type="text" size="15" name="name" value="{{ user.name }}" /></li>
+    <li>EMail ändern:<input type="text" size="30" name="mail" value="{{ user.mail }}" /></li>
+    <li>Bild ändern:<input type="file" name="image" /></li>
+    <li><input class="input_update" type="submit" value="Update Profile" /></li>
+    <ul>
   </form>
+</div>
 
-<table class="history">
-<tr><td>date</td><td>good</td><td>amount</td><td>unit</td><td>from</td><td></td><td>to</td></tr>
-{% for t in transactions %}
-  <tr><td>{{ t.datetime }}</td><td>{{ t.valuable_name }}</td><td>{{ t.amount }}</td><td>{{ t.unit_name }}</td><td>{{ t.from_name}}</td><td>-></td><td>{{ t.to_name }}</td><td><a href="{{ url_for('cancle_transaction', username=user.name, transaction_id=t.rowid)}}">Stornieren</a></td></tr>
-{% else %}
-  <tr><td><em>Unbelievable. No users here so far.</em></td></tr>
-{% endfor %}
-</table>
+<div class="products">
 
+<h2>Statistik:</h2>
 <table class="balance">
-<tr><td>good</td><td>amount</td><td>unit</td></tr>
-{% for b in balance %}
-  <tr><td>{{ b.valuable_name }}</td><td>{{ b.balance }}</td><td>{{ b.unit_name}}</td></tr>
-{% else %}
-  <tr><td><em>Unbelievable. No users here so far.</em></td></tr>
-{% endfor %}
+  <tr>
+    <td>Ware</td>
+    <td>Menge</td>
+    <td>Einheit</td>
+  </tr>
+  {% for b in balance %}
+  <tr>
+    <td>{{ b.valuable_name }}</td>
+    <td class="number">{{ b.balance }}</td>
+    <td>{{ b.unit_name}}</td>
+  </tr>
+  {% else %}
+  <tr>
+    <td><em>Unbelievable. No users here so far.</em></td>
+  </tr>
+  {% endfor %}
 </table>
 
-<ul>
-<li><a href="{{ url_for('show_userpage', username=user.name) }}">Zurück</a>
-</ul>
+<h2>Transaktionsverlauf:</h2>
+<table class="history">
+  <tr>
+    <td>Datum</td>
+    <td>Ware</td>
+    <td>Menge</td>
+    <td>Einheit</td>
+    <td>Von</td>
+    <td></td>
+    <td>Zu</td>
+  </tr>
+  {% for t in transactions %}
+  <tr>
+    <td>{{ t.datetime }}</td>
+    <td>{{ t.valuable_name }}</td>
+    <td class="number">{{ t.amount }}</td>
+    <td>{{ t.unit_name }}</td>
+    <td>{{ t.from_name}}</td>
+    <td> </td>
+    <td>{{ t.to_name }}</td>
+    <td><a href="{{ url_for('cancle_transaction', username=user.name, transaction_id=t.rowid)}}">Stornieren</a></td>
+  </tr>
+  {% else %}
+  <tr>
+    <td><em>Unbelievable. No transactions here so far.</em></td>
+  </tr>
+  {% endfor %}
+</table>
+
+</div>
+
+<div class="footer">
+  <a href="{{ url_for('show_userpage', username=user.name) }}" class="back">zurück</a>
+</div>
+
 {% endblock %}

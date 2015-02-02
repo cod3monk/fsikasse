@@ -110,6 +110,7 @@ div.side .user .name {
 	overflow: auto;
 	text-overflow: clip;
 	white-space: normal;
+	word-wrap: break-word;
 }
 
 div.user .balance {
@@ -260,9 +261,9 @@ div.main_wrapper .user {
 
 div.prod {
 	float: left;
-	width: 150px;
+	width: 125px;
 	height: calc(230px + 10px +10px + 25px + 25px );
-	margin: 10px 15px;
+	margin: 10px;
 	padding: 5px;
 	border: 1px solid rgba(0,0,0,0.8);
 	border-radius: 5px;

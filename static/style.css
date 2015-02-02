@@ -6,8 +6,22 @@ body {
 	height: 768px;
 	background: white;
 	color: #2e3436;
-/*	border-right: 1px solid red;
-	border-bottom: 1px solid red;*/
+}
+
+::-webkit-scrollbar {
+    height: 12px;
+    width: 32px;
+    background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(rgba(0,0,0,0.9), rgba(0,0,0,0.7));
+  -webkit-border-radius: 5px;
+	-webkit-border: 1px solid #2e3436;
+}
+
+::-webkit-scrollbar-corner {
+    background: red;
 }
 
 h1 {
@@ -248,7 +262,7 @@ div.prod {
 	float: left;
 	width: 150px;
 	height: calc(230px + 10px +10px + 25px + 25px );
-	margin: 10px 20px;
+	margin: 10px 15px;
 	padding: 5px;
 	border: 1px solid rgba(0,0,0,0.8);
 	border-radius: 5px;

@@ -26,7 +26,7 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'kasse.db'),
     UPLOAD_FOLDER = 'static/',
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif']),
-    PROFILE_IMAGE_SIZE = (512, 512),
+    PROFILE_IMAGE_SIZE = (150, 200),
     STORAGE_ACCOUNT = (4, 'Lager/Kühlschrank'),
     CASH_IN_ACCOUNT = (1, 'FSI: Graue Kasse'),
     MONEY_VALUABLE_ID = 1,
@@ -206,6 +206,14 @@ def edit_userprofile(username):
 
             # Resizing image with PIL
             im = Image.open(image)
+
+            # cut/crop image if not 3:4 ratio
+            if float(im.size[0]) / float(im.size[1]) != 3.0/4.0:
+                new_width = int(im.size[0] * ( ( float(im.size[1]) * 3.0 )/ ( float(im.size[0]) * 4.0 ) ) )
+                left = int(im.size[0]/2 - new_width/2)
+                im = im.crop((left, 0, left + new_width, im.size[1]))
+                flash(u'Image had to be cropped to 3:4 ratio, sorry!')
+
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
@@ -238,11 +246,16 @@ def add_user():
         if image and allowed_file(image.filename):
             filename = 'users/'+randomword(10)+'_'+secure_filename(image.filename)
 
-            # Resizing image with PIL
+            # Resizing/saving image with PIL
             im = Image.open(image)
-            wpercent = (150/float(im.size[0]))
-            hsize = int((float(im.size[1])*float(wpercent)))
-            im = im.resize((basewidth,hsize), PIL.Image.ANTIALIAS)
+
+            # cut/crop image if not 3:4 ratio
+            if float(im.size[0]) / float(im.size[1]) != 3.0/4.0:
+                new_width = int(im.size[0] * ( ( float(im.size[1]) * 3.0 )/ ( float(im.size[0]) * 4.0 ) ) )
+                left = int(im.size[0]/2 - new_width/2)
+                im = im.crop((left, 0, left + new_width, im.size[1]))
+                flash(u'Image had to be cropped to 3:4 ratio, sorry!')
+
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:

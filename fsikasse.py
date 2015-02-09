@@ -133,7 +133,7 @@ def action_buy(username, valuablename):
     db.commit()
 
     if user['direct_payment']:
-        flash('Bitte {:.2f} &euro; in die graue Kasse legen.'.format(valuable['price']/100.0))
+        flash('Bitte {:.2f} € in die graue Kasse legen.'.format(valuable['price']/100.0))
     else:
         flash('Einkauf war erfolgreich :)')
     return redirect(url_for('show_index'))
@@ -154,6 +154,10 @@ def transfer_money(username):
         abort(404)
 
     amount = int(float(request.form['amount'])*100)
+
+    if amount <= 0.0:
+        flash(u'Keine Transaktion durchgeführt.')
+        return redirect(url_for('show_index'))
 
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
@@ -222,6 +226,11 @@ def add_user():
     else:  # request.method == 'POST'
         db = get_db()
         cur = db.cursor()
+
+        if request.form['name'] == '':
+            flash(u'Bitte einen Namen angeben, danke!')
+            return redirect(url_for('show_index'))
+
         cur.execute('INSERT INTO account (name) VALUES (?)',
                    [request.form['name']])
 
@@ -231,6 +240,9 @@ def add_user():
 
             # Resizing image with PIL
             im = Image.open(image)
+            wpercent = (150/float(im.size[0]))
+            hsize = int((float(im.size[1])*float(wpercent)))
+            im = im.resize((basewidth,hsize), PIL.Image.ANTIALIAS)
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         else:
@@ -253,6 +265,10 @@ def add_to_account(username):
         abort(404)
 
     amount = int(float(request.form['amount'])*100)
+
+    if amount <= 0.0:
+        flash(u'Keine Transaktion durchgeführt.')
+        return redirect(url_for('show_index'))
 
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
@@ -281,6 +297,10 @@ def sub_from_account(username):
         abort(404)
 
     amount = int(float(request.form['amount'])*100)
+
+    if amount <= 0.0:
+        flash(u'Keine Transaktion durchgeführt.')
+        return redirect(url_for('show_index'))
 
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid

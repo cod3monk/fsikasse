@@ -86,6 +86,9 @@ def show_index():
         'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ?',
         [app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
+
+    # sort users by
+
     return render_template('start.html', users=users)
 
 @app.route('/user/<username>')

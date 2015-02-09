@@ -17,7 +17,9 @@
           {% endif %}
         </span>
         <span class="name">{{ user.name }}</span>
-        <span class="balance">{{ '%.2f' % (user.balance / 100.0) }} €</span>
+        <span class="balance" {% if user.balance < 0.0 %}style="color: red;"{% endif %}>
+            {{ '%.2f' % (user.balance / 100.0) }} €
+        </span>
       </div>
     </a>
     {% else %}
@@ -32,6 +34,8 @@
       <span class="balance"></span>
   </div></a>
 </div>
+
+<div style="display:block; width: 500px; min-height: 100px; float:right;">.</div>
 
 </div>
 

@@ -87,9 +87,21 @@ def show_index():
         [app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
-    # sort users by
+    # sort users by descending balance
+    users_sorted = users
+    for i in range(len(users)):
+        swap_me = i
+        max_balance = users[i]["balance"]
+        for ix in range(i,len(users)):
+            if users[ix]["balance"] > max_balance:
+                max_balance = users[ix]["balance"]
+                swap_me = ix
+        if swap_me != i:
+            u = users[swap_me]
+            users_sorted[swap_me] = users[i]
+            users_sorted[i]  = u
 
-    return render_template('start.html', users=users)
+    return render_template('start.html', users=users_sorted)
 
 @app.route('/user/<username>')
 def show_userpage(username):

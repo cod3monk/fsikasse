@@ -1,5 +1,7 @@
 <!doctype html>
 <title>FSIKasse</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.js"></script>
+<script type="text/javascript">$(function() {setTimeout(function() { $(".flash").fadeOut(2000); }, 10000)})</script>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>

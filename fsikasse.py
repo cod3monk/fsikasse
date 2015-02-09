@@ -12,6 +12,7 @@ except:
 
 from sqlite3 import dbapi2 as sqlite3
 import os
+import re
 import random
 import string
 from datetime import datetime
@@ -21,6 +22,9 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 from werkzeug import secure_filename
 from PIL import Image
 app = Flask(__name__)
+
+# regex to check for valid email adresses
+EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
 app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'kasse.db'),
@@ -208,11 +212,15 @@ def edit_userprofile(username):
         if not user['allow_edit_profile']:
             abort(403)
 
+        if request.form['mail'] == '' or not EMAIL_REGEX.match(request.form['mail']):
+            flash(u'Bitte eine korrekte Kontaktadresse angeben, danke!')
+            return redirect(url_for('edit_userprofile', username=user['name']))
+
         cur.execute('UPDATE account SET name=? WHERE rowid = ?',
                    [request.form['name'], user['account_id']])
 
         filename = user['image_path']
-        if request.files['image']:
+        if request.files['image'] and request.files['image'].filename != '':
             # Replace image
             image = request.files['image']
             assert image and allowed_file(image.filename), \
@@ -240,6 +248,7 @@ def edit_userprofile(username):
             # Remove old profile image
             os.unlink(os.path.join(app.config['UPLOAD_FOLDER'], user['image_path']))
 
+        flash(u'Benutzerprofil erfolgreich aktualisiert!')
         return redirect(url_for('edit_userprofile', username=request.form['name']))
 
 @app.route('/user/add', methods=['POST', 'GET'])
@@ -252,6 +261,10 @@ def add_user():
 
         if request.form['name'] == '':
             flash(u'Bitte einen Namen angeben, danke!')
+            return redirect(url_for('show_index'))
+
+        if request.form['mail'] == '' or not EMAIL_REGEX.match(request.form['mail']):
+            flash(u'Bitte eine Kontaktadresse angeben, danke!')
             return redirect(url_for('show_index'))
 
         cur.execute('INSERT INTO account (name) VALUES (?)',

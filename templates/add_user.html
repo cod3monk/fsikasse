@@ -11,14 +11,16 @@
       <dd><input class="form_input" type="text" size="30" name="name" /></dd>
       <dt>Mail:</dt>
       <dd><input class="form_input" type="text" size="30" name="mail" /></dd>
-      <dt>Image:</dt>
+      <dt>Select Image:</dt>
       <dd><input class="form_file" type="file" name="image" /></dd>
+      <dt>Or wget URL:</dt>
+      <dd><input class="form_input" type="text" size="30" name="image_url" /></dd>
       <dd><input class="form_submit" type="submit" value="Submit New Userdata" /></dd>
     </dl>
   </form>
 </div>
 
 <div class="footer">
-  <a href="{{ url_for('show_index') }}" class="back">zurück</a>
+  <a href="{{ url_for('show_index') }}" class="back"><i class="fa fa-arrow-circle-o-left"></i> zurück</a>
 </div>
 {% endblock %}

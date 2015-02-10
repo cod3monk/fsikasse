@@ -64,8 +64,6 @@ div.footer {
 
 div.footer .back
 {
-	background: url("/static/back.svg") 0px 7px no-repeat;
-	padding-left: 20px;
 	margin-left: 10px;
 	color: #2e3436;
 	font-size: 20px;
@@ -142,7 +140,7 @@ div.user img {
 	display: block;
 	width: 150px;
 	height: 200px;
-	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.2)));
+	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, 0.2)));
 }
 
 div.user span.new {

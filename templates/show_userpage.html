@@ -9,7 +9,7 @@
       {% if user.image_path %}
       <img src="{{ url_for('static', filename=user.image_path) }}" />
       {% else %}
-      <img src="/static/dummy-user.svg" />
+      <img src="/static/users/default_user.jpg" />
       {% endif %}
       <span class="name">{{ user.name }}</span>
     </div>
@@ -62,6 +62,6 @@
 </div>
 
 <div class="footer">
-  <a href="{{ url_for('show_index') }}" class="back">zurück</a>
+  <a href="{{ url_for('show_index') }}" class="back"><i class="fa fa-arrow-circle-o-left"></i> zurück</a>
 </div>
 {% endblock %}

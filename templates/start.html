@@ -13,7 +13,7 @@
           {% if user.image_path %}
           <img src="{{ url_for('static', filename=user.image_path) }}" />
           {% else %}
-          <img src="/static/dummy-user.svg" />
+          <img src="/static/users/default_user.jpg" />
           {% endif %}
         </span>
         <span class="name">{{ user.name }}</span>
@@ -27,8 +27,7 @@
   {% endfor %}
   <a href="{{ url_for('add_user') }}"><div class="user">
         <span class="user-image">
-          <img src="/static/add.svg" />
-          <!-- <span class="new">+</span> -->
+          <span class="new"><i class="fa fa-plus-circle"></i></span>
         </span>
       <span class="name">Neuer Nutzer</span>
       <span class="balance"></span>
@@ -40,7 +39,7 @@
 </div>
 
 <div class="bottom-big">
-    <a href="{{ url_for('show_userpage', username='Gäste') }}"><div class="guest-account">Gäste</div></a>
-   <a href="{{ url_for('show_userpage', username='Materialsammlung') }}"><div class="free-account">Materialsammlung</div></a>
+    <a href="{{ url_for('show_userpage', username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
+   <a href="{{ url_for('show_userpage', username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
 </div>
 {% endblock %}

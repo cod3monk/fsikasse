@@ -25,6 +25,7 @@
     {% else %}
     <em>Unbelievable. No users here so far.</em></li>
   {% endfor %}
+  {% if admin_panel %}
   <a href="{{ url_for('add_user') }}"><div class="user">
         <span class="user-image">
           <span class="new"><i class="fa fa-plus-circle"></i></span>
@@ -32,6 +33,7 @@
       <span class="name">Neuer Nutzer</span>
       <span class="balance"></span>
   </div></a>
+  {% endif %}
 </div>
 
 <span style="display:block; width: 500px; min-height: calc(50px + 22pt); float:right;" />

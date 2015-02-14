@@ -93,6 +93,16 @@ def show_index():
 
     return render_template('start.html', users=users)
 
+@app.route('/admin', methods=['GET'])
+def admin_index():
+    db = get_db()
+    db = db.execute(
+        'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ? ORDER BY balance DESC',
+        [app.config['MONEY_VALUABLE_ID']])
+    users = db.fetchall()
+
+    return render_template('start.html', users=users, admin_panel=True)
+
 @app.route('/user/<username>')
 def show_userpage(username):
     db = get_db()

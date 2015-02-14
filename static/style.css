@@ -370,12 +370,17 @@ div.bottom-big div.free-account {
 
 div.add_user {
 	width: 432px;
-	height: 300px;
+	height: calc( 3 * 45px + 50px + 5px );
 	padding: 10px;
 	margin: 50px auto;
 	border: 1px solid rgba(0,0,0,0.8);
 	border-radius: 5px;
 	background: rgba(0,0,0,0.8);
+}
+
+div.add_user dl {
+	margin: 0;
+	padding: 0;
 }
 
 div.add_user dl dt {

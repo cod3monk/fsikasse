@@ -18,7 +18,7 @@
     {% if not user.direct_payment %}
     <li>Einzahlen:
       <form action="{{ url_for('add_to_account', username=user.name) }}" method="post">
-        <input type="number" min="0" max="100" step="0.01" size="6" name="amount" value="0.00">
+        <input type="number" class="input_number" min="0" max="100" step="0.01" size="6" name="amount" value="0.00">
         <input type="submit" value="Einzahlen"/>
       </form>
     </li>
@@ -29,13 +29,13 @@
           <option>{{ u.name }}</option>
           {% endfor %}
         </select>
-        <input type="number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
+        <input type="number" class="input_number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
         <input type="submit" value="Überweisen" />
       </form>
     </li>
     <li>Auszahlen:
       <form action="{{ url_for('sub_from_account', username=user.name) }}" method="post">
-        <input type="number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
+        <input type="number" class="input_number" min="0" max="100" step="0.01" size="10" name="amount" value="0.00" />
         <input type="submit" value="Auszahlen" />
       </form>
     </li>

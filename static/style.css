@@ -284,9 +284,9 @@ div.prod {
 	height: calc(230px + 10px +10px + 25px + 25px );
 	margin: 10px;
 	padding: 5px;
-	border: 1px solid rgba(0,0,0,0.8);
+	border: 1px solid rgba(0,0,0,0.95);
 	border-radius: 5px;
-	background: rgba(0,0,0,0.8);
+	background: rgba(0,0,0,0.95);
 }
 
 .prod img {

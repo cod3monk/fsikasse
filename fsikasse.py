@@ -203,7 +203,7 @@ def edit_userprofile(username):
             'SELECT `transaction`.rowid, comment, datetime, account_from.name AS from_name, from_id, account_to.name AS to_name, to_id, amount, valuable.unit_name, valuable.name AS valuable_name, valuable_id FROM `transaction` JOIN transfer ON `transaction`.rowid = transfer.transaction_id JOIN `valuable` ON transfer.valuable_id = valuable.rowid LEFT JOIN account AS account_from ON from_id = account_from.rowid LEFT JOIN account AS account_to ON to_id = account_to.rowid WHERE from_id = ? OR to_id = ?  ORDER BY strftime("%s", datetime) DESC',
             [user['account_id'], user['account_id']])
         transactions = cur.fetchall()
-        return render_template('user_profile.html', user=user, transactions=transactions, balance=balance)
+        return render_template('user_profile.html', user=user, transactions=transactions, balance=balance, return_to_userpage=True)
     else:  # request.method == 'POST':
         if not user['allow_edit_profile']:
             abort(403)

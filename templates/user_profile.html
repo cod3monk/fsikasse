@@ -17,8 +17,8 @@
 
   <form action="{{ url_for('edit_userprofile', username=user.name) }}" method="post" enctype="multipart/form-data">
    <ul class="change_info">
-    <li>Name ändern:<input type="text" size="15" name="name" value="{{ user.name }}" /></li>
-    <li>EMail ändern:<input type="text" size="30" name="mail" value="{{ user.mail }}" /></li>
+    <li>Name ändern:<input type="text" class="input_text" size="15" name="name" value="{{ user.name }}" /></li>
+    <li>EMail ändern:<input type="text" class="input_text" size="30" name="mail" value="{{ user.mail }}" /></li>
     <li>Bild ändern:<input type="file" name="image" /></li>
     <li><input class="input_update" type="submit" value="Update Profile" /></li>
     <ul>

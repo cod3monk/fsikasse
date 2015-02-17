@@ -74,7 +74,7 @@ INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('Apfelschorle', 'Flasche', 60, 'products/Loscher-Apfelschorle.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
-    VALUES ('Apfelsaft', 'Flasche', 60, NULL);
+    VALUES ('Apfelsaft', 'Flasche', 60, 'products/Loscher-Apfelsaft.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('Bier', 'Flasche', 90, 'products/Bier.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)

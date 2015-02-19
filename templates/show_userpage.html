@@ -43,7 +43,7 @@
   </ul>
 </div>
 
-<div class="products">
+<div class="products" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 {% for prod in products %}
   <a href="{{ url_for('action_buy', username=user.name, valuablename=prod.name) }}">
     <div class="prod">

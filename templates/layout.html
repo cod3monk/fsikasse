@@ -2,15 +2,15 @@
 <title>FSIKasse</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}">
-<script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.js"></script>
+<!--><script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.js"></script>
 <script type="text/javascript">$(function() {setTimeout(function() { $(".flash").fadeOut(2000); }, 10000)})</script>
 
-<!-- touch numpad code -->
+<!-- touch numpad code ->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link type="text/css" href="{{ url_for('static', filename='js/jquery.keypad.css') }}" rel="stylesheet">
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.plugin.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad-de.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad-de.js') }}"></script>-->
 
 <script>
 $(function () {
@@ -21,13 +21,14 @@ $(function () {
 });
 </script>
 
+<body>
 {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
 {% endfor %}
 
 {% block body %}Nichts zu sehen.{% endblock %}
 
-<div class="footer">
+<div class="footer" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
   {% if return_to_userpage == True %}
   	<a href="{{ url_for('show_userpage', username=user.name) }}" class="back">
   {% else %}
@@ -35,3 +36,4 @@ $(function () {
   {% endif %}
   	 <i class="fa fa-arrow-circle-o-left"></i> zurück</a>
 </div>
+</body>

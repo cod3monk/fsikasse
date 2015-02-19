@@ -6,6 +6,7 @@ body {
 	height: 768px;
 	background: white;
 	color: #2e3436;
+    user-select: none !important;
 }
 
 ::-webkit-scrollbar {

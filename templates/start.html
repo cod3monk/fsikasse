@@ -1,13 +1,40 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<h1 class="header">Benutzerübersicht:</h1>
-
 <div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 
 <div id="users-list">
+  {% if admin_panel %}
+  <a href="{{ url_for('add_user', admin=admin_panel) }}">
+    <div class="user">
+      <span class="user-image">
+        <span class="new"><i class="fa fa-plus-circle"></i></span>
+      </span>
+      <span class="name">Neuer Nutzer</span>
+      <span class="balance"></span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="user">
+      <span class="user-image">
+        <span class="new"><i class="fa fa-server"></i></span>
+      </span>
+      <span class="name">Lagerbestand</span>
+      <span class="balance"></span>
+    </div>
+  </a>
+  <a href="#">
+    <div class="user">
+      <span class="user-image">
+        <span class="new"><i class="fa fa-bar-chart"></i></span>
+      </span>
+      <span class="name">Statistiken</span>
+      <span class="balance"></span>
+    </div>
+  </a>
+  {% endif %}
     {% for user in users %}
-    <a href="{{ url_for('show_userpage', username=user.name) }}">
+    <a href="{{ url_for('show_userpage', admin=admin_panel, username=user.name) }}">
       <div class="user">
         <span class="user-image">
           {% if user.image_path %}
@@ -25,21 +52,12 @@
     {% else %}
     <em>Unbelievable. No users here so far.</em></li>
   {% endfor %}
-  {% if admin_panel %}
-  <a href="{{ url_for('add_user') }}"><div class="user">
-        <span class="user-image">
-          <span class="new"><i class="fa fa-plus-circle"></i></span>
-        </span>
-      <span class="name">Neuer Nutzer</span>
-      <span class="balance"></span>
-  </div></a>
-  {% endif %}
 </div>
 
 </div>
 
 <div class="bottom-big">
-    <a href="{{ url_for('show_userpage', username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
-   <a href="{{ url_for('show_userpage', username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
+    <a href="{{ url_for('show_userpage', admin=admin_panel, username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
+   <a href="{{ url_for('show_userpage', admin=admin_panel, username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
 </div>
 {% endblock %}

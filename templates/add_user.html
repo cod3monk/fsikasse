@@ -2,8 +2,6 @@
 {% block body %}
 {% if error %}<p class="error"><strong>Error:</strong> {{ error }}</p>{% endif %}
 
-<h1 class="header">Benutzer hinzufügen:</h1>
-
 <div class="add_user">
   <form action="{{ url_for('add_user') }}" method="post" class="add-entry" enctype="multipart/form-data">
     <dl>

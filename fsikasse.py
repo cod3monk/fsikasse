@@ -91,7 +91,7 @@ def show_index():
         [app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
-    return render_template('start.html', users=users)
+    return render_template('start.html', title="Benutzerübersicht", users=users)
 
 @app.route('/admin', methods=['GET'])
 def admin_index():
@@ -101,7 +101,7 @@ def admin_index():
         [app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
-    return render_template('start.html', users=users, admin_panel=True)
+    return render_template('start.html', title="Benutzerübersicht", admin_panel=True, users=users)
 
 @app.route('/user/<username>')
 def show_userpage(username):
@@ -122,7 +122,7 @@ def show_userpage(username):
     cur = cur.execute('SELECT valuable.name AS name, price, unit_name, symbol, image_path FROM valuable, unit WHERE unit.name = valuable.unit_name AND product = 1')
     products = cur.fetchall()
     return render_template(
-        'show_userpage.html', user=user, products=products, balance=user_balance,
+        'show_userpage.html', title="Getränkeliste", user=user, products=products, balance=user_balance,
         user_list=user_list)
 
 @app.route('/user/<username>/buy/<valuablename>')
@@ -181,7 +181,7 @@ def transfer_money(username):
     db.commit()
 
     flash('Geld wurde überwiesen.')
-    return redirect(url_for('show_index'))
+    return redirect(url_for('show_index'), title="Benutzerübersicht" )
 
 @app.route('/user/<username>/profile', methods=['POST', 'GET'])
 def edit_userprofile(username):
@@ -203,7 +203,7 @@ def edit_userprofile(username):
             'SELECT `transaction`.rowid, comment, datetime, account_from.name AS from_name, from_id, account_to.name AS to_name, to_id, amount, valuable.unit_name, valuable.name AS valuable_name, valuable_id FROM `transaction` JOIN transfer ON `transaction`.rowid = transfer.transaction_id JOIN `valuable` ON transfer.valuable_id = valuable.rowid LEFT JOIN account AS account_from ON from_id = account_from.rowid LEFT JOIN account AS account_to ON to_id = account_to.rowid WHERE from_id = ? OR to_id = ?  ORDER BY strftime("%s", datetime) DESC',
             [user['account_id'], user['account_id']])
         transactions = cur.fetchall()
-        return render_template('user_profile.html', user=user, transactions=transactions, balance=balance, return_to_userpage=True)
+        return render_template('user_profile.html', title="Benutzerprofil " + user['name'], user=user, transactions=transactions, balance=balance, return_to_userpage=True)
     else:  # request.method == 'POST':
         if not user['allow_edit_profile']:
             abort(403)
@@ -250,7 +250,7 @@ def edit_userprofile(username):
 @app.route('/user/add', methods=['POST', 'GET'])
 def add_user():
     if request.method == 'GET':
-        return render_template('add_user.html')
+        return render_template('add_user.html', title="Benutzer hinzufügen", admin_panel=True)
     else:  # request.method == 'POST'
         db = get_db()
         cur = db.cursor()

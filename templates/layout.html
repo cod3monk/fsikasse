@@ -10,7 +10,7 @@
 <link type="text/css" href="{{ url_for('static', filename='js/jquery.keypad.css') }}" rel="stylesheet">
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.plugin.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad-de.js') }}"></script>-->
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad-de.js') }}"></script>
 
 <script>
 $(function () {
@@ -19,9 +19,12 @@ $(function () {
                                       '123' + $.keypad.BACK,
                                       '.0'  + $.keypad.SPACE]});
 });
-</script>
+</script>-->
 
 <body>
+
+<h1 class="header">{{ title }}:</h1>
+
 {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>
 {% endfor %}
@@ -31,6 +34,8 @@ $(function () {
 <div class="footer" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
   {% if return_to_userpage == True %}
   	<a href="{{ url_for('show_userpage', username=user.name) }}" class="back">
+  {% elif admin_panel == True %}
+    <a href="{{ url_for('admin_index') }}" class="back">
   {% else %}
   	<a href="{{ url_for('show_index') }}" class="back">
   {% endif %}

@@ -227,10 +227,15 @@ def edit_userprofile(username):
             im = Image.open(image)
 
             # cut/crop image if not 3:4 ratio
-            if float(im.size[0]) / float(im.size[1]) != 3.0/4.0:
+            if float(im.size[0]) / float(im.size[1]) > 3.0/4.0: # crop width
                 new_width = int(im.size[0] * ( ( float(im.size[1]) * 3.0 )/ ( float(im.size[0]) * 4.0 ) ) )
                 left = int(im.size[0]/2 - new_width/2)
                 im = im.crop((left, 0, left + new_width, im.size[1]))
+                flash(u'Image had to be cropped to 3:4 ratio, sorry!')
+	    elif float(im.size[0]) / float(im.size[1]) < 3.0/4.0: # crop height
+                new_height = int(im.size[1] * ( ( float(im.size[0]) * 4.0 )/ ( float(im.size[1]) * 3.0 ) ) )
+                top = int(im.size[1]/2 - new_height/2)
+                im = im.crop((0, top, im.size[0], top + new_height))
                 flash(u'Image had to be cropped to 3:4 ratio, sorry!')
 
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
@@ -274,11 +279,17 @@ def add_user():
             im = Image.open(image)
 
             # cut/crop image if not 3:4 ratio
-            if float(im.size[0]) / float(im.size[1]) != 3.0/4.0:
+            if float(im.size[0]) / float(im.size[1]) > 3.0/4.0: # crop width
                 new_width = int(im.size[0] * ( ( float(im.size[1]) * 3.0 )/ ( float(im.size[0]) * 4.0 ) ) )
                 left = int(im.size[0]/2 - new_width/2)
                 im = im.crop((left, 0, left + new_width, im.size[1]))
                 flash(u'Image had to be cropped to 3:4 ratio, sorry!')
+            elif float(im.size[0]) / float(im.size[1]) < 3.0/4.0: # crop height
+                new_height = int(im.size[1] * ( ( float(im.size[0]) * 4.0 )/ ( float(im.size[1]) * 3.0 ) ) )
+                top = int(im.size[1]/2 - new_height/2)
+                im = im.crop((0, top, im.size[0], top + new_height))
+                flash(u'Image had to be cropped to 3:4 ratio, sorry!')
+
 
             im.thumbnail(app.config['PROFILE_IMAGE_SIZE'], Image.ANTIALIAS)
             im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))

@@ -2,28 +2,116 @@
 <title>FSIKasse</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}">
-<!--><script type="text/javascript" src="http://code.jquery.com/jquery-2.1.3.js"></script>
-<script type="text/javascript">$(function() {setTimeout(function() { $(".flash").fadeOut(2000); }, 10000)})</script>
 
-<!-- touch numpad code ->
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<link type="text/css" href="{{ url_for('static', filename='js/jquery.keypad.css') }}" rel="stylesheet">
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.plugin.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad.js') }}"></script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.keypad-de.js') }}"></script>
+<!-- numpad code -->
+<script type="text/javascript">
+/**
+ * Determines the id of the input field the numpad works on.
+ */
+function numpadGetElement() {
+  return document.getElementById("numpad_element_id").value;
+}
 
-<script>
-$(function () {
-	$('.input_number').keypad({layout: ['789' + $.keypad.CLOSE,
-                                      '456' + $.keypad.CLEAR,
-                                      '123' + $.keypad.BACK,
-                                      '.0'  + $.keypad.SPACE]});
-});
-</script>-->
+/**
+ * Sets the id of the input field the numpad works on.
+ */
+function numpadSetElement(element_id) {
+  document.getElementById("numpad_element_id").value = element_id;
+}
+
+/**
+ * Lets the keypad appear.
+ */
+function numpadShow(element_id) {
+  var element_rect = document.getElementById(element_id).getBoundingClientRect();
+  var numpad = document.getElementById("numpad");
+  numpad.style.position = "absolute";
+  numpad.style.top = element_rect.bottom + 'px';
+  numpad.style.left = element_rect.left + 'px';
+  numpad.style.visibility = 'visible';
+  numpadSetElement(element_id);
+}
+
+/**
+ * Lets the keypad disappear.
+ */
+function numpadHide() {
+  document.getElementById("numpad").style.visibility = 'hidden';
+  numpadSetElement("");
+}
+
+/**
+ * Takes the given text and converts it into format XXX.XX.
+ * In this course it ignores any previously existing dots.
+ */
+function numpadShiftComma(text, element_id) {
+  text = "000" + text;
+  var text_wo_dot = text.replace(".", "");
+  var full_text = parseInt(text_wo_dot.substring(0, (text_wo_dot.length - 2))) 
+                  + "." + text_wo_dot.substring(text_wo_dot.length - 2);
+  document.getElementById(element_id).value = full_text;
+}
+
+/**
+ * Takes the existing value from the given element and appends the 
+ * given text.
+ */
+function numpadAppend(text) {
+  var element_id = numpadGetElement();
+  numpadShiftComma( document.getElementById(element_id).value + text, element_id );
+}
+
+/**
+ * Deletes the last character from the given element
+ */
+function numpadBackspace() {
+  var element_id = numpadGetElement();
+  var val = document.getElementById(element_id).value;
+  numpadShiftComma( val.substring(0, val.length - 1), element_id );
+}
+
+/**
+ * Clears the content of the field
+ */
+function numpadClear() {
+  numpadShiftComma( "", numpadGetElement() );
+}
+</script>
 
 <body>
 
 <h1 class="header">{{ title }}:</h1>
+
+<div class="numpad" id="numpad">
+  <input type="hidden" id="numpad_element_id" value="" />
+  <table>
+    <tr>    
+      <td> <input type="button" value="1" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
+      <td> <input type="button" value="2" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
+      <td> <input type="button" value="3" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
+      <td> <input type="button" value="X" class="numpad-key" onClick="numpadHide();" /> </td>
+    </tr>
+    
+    <tr>    
+      <td> <input type="button" value="4" class="numpad-key" onClick="numpadAppend('4');" /> </td>
+      <td> <input type="button" value="5" class="numpad-key" onClick="numpadAppend('5');" /> </td>
+      <td> <input type="button" value="6" class="numpad-key" onClick="numpadAppend('6');" /> </td>
+      <td>  </td>
+    </tr>
+    <tr>    
+      <td> <input type="button" value="7" class="numpad-key" onClick="numpadAppend('7');" /> </td>
+      <td> <input type="button" value="8" class="numpad-key" onClick="numpadAppend('8');" /> </td>
+      <td> <input type="button" value="9" class="numpad-key" onClick="numpadAppend('9');" /> </td>
+      <td>  </td>
+    </tr>
+    <tr>    
+      <td> <input type="button" value="C" class="numpad-key" onClick="numpadClear();" /> </td>
+      <td> <input type="button" value="0" class="numpad-key" onClick="numpadAppend('0');" /> </td>
+      <td> <input type="button" value="<" class="numpad-key" onClick="numpadBackspace();" /> </td>
+      <td>  </td>
+    </tr>
+  </table>
+</div>
 
 {% for message in get_flashed_messages() %}
     <div class="flash">{{ message }}</div>

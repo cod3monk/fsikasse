@@ -1,4 +1,5 @@
 <!doctype html>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
 <title>FSIKasse</title>
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome.min.css') }}">
@@ -11,29 +12,29 @@
 <div class="numpad" id="numpad">
   <input type="hidden" id="numpad_element_id" value="" />
   <table>
-    <tr>    
+    <tr>
       <td> <input type="button" value="1" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="2" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="3" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
-      <td> <input type="button" value="X" class="numpad-key" onClick="numpadHide();" /> </td>
+      <td> <input type="button" value="close" class="numpad-key" onClick="numpadHide();" /> </td>
     </tr>
-    
-    <tr>    
+
+    <tr>
       <td> <input type="button" value="4" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="5" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="6" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td>  </td>
     </tr>
-    <tr>    
+    <tr>
       <td> <input type="button" value="7" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="8" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td> <input type="button" value="9" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
       <td>  </td>
     </tr>
-    <tr>    
+    <tr>
       <td> <input type="button" value="C" class="numpad-key" onClick="numpadClear();" /> </td>
       <td> <input type="button" value="0" class="numpad-key" onClick="numpadAppend(this.value);" /> </td>
-      <td> <input type="button" value="<" class="numpad-key" onClick="numpadBackspace();" /> </td>
+      <td> <input type="button" value="←" class="numpad-key" onClick="numpadBackspace();" /> </td>
       <td>  </td>
     </tr>
   </table>

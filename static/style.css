@@ -212,6 +212,7 @@ input[type="text"] {
 	box-shadow: 0px 1px white;
 }
 
+input[type="button"],
 input[type="submit"] {
 	float: right;
 	display: block;
@@ -460,8 +461,24 @@ div.add_user dl dd input[type="file"] {
 
 div.numpad {
 	visibility: hidden;
+	width: 798px;
+	height: 656px;
 	position: absolute;
+	top: 50px;
+	left: 192px;
+	padding: 5px;
+	background-color: rgba(0,0,0,0.9);
+	border: 0;
+	border-radius: 0px;
+	z-index: 999;
+}
+
+div.numpad table {
+	position: relative;
+	left: 200px;
+	top: 200px;
 	background-color: #ffffff;
 	border: 1px solid #000000;
-	border-radius: 5px;
+	border-radius: 2px;
+	padding: 5px;
 }

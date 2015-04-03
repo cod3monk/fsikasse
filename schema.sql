@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `user` (
     `active`             INTEGER NOT NULL DEFAULT 1
 );
 
-CREATE VIEW IF NOT EXISTS `account_valuable_balance` AS 
-    SELECT 
+CREATE VIEW IF NOT EXISTS `account_valuable_balance` AS
+    SELECT
         account.name AS account_name,
         account.rowid AS account_id,
         valuable.name AS valuable_name,
@@ -52,16 +52,16 @@ INSERT INTO `account` (`rowid`, `name`) VALUES (4, 'FSI: Lager/Kühlschrank');
 INSERT INTO `account` (`rowid`, `name`) VALUES (5, 'Gäste');
 INSERT INTO `account` (`rowid`, `name`) VALUES (6, 'Materialsammlung');
 
-INSERT INTO `user` (`name`, `account_id`, `browsable`, `direct_payment`, `allow_edit_profile`) 
+INSERT INTO `user` (`name`, `account_id`, `browsable`, `direct_payment`, `allow_edit_profile`)
     VALUES ("Gäste", 5, 0, 1, 0);
-INSERT INTO `user` (`name`, `account_id`, `browsable`, `allow_edit_profile`) 
+INSERT INTO `user` (`name`, `account_id`, `browsable`, `allow_edit_profile`)
     VALUES ("Materialsammlung", 6, 0, 0);
 
 INSERT INTO `unit` (`name`, `symbol`) VALUES ('Cent', '¢');
 INSERT INTO `unit` (`name`, `symbol`) VALUES ('Flasche', 'Fl.');
 INSERT INTO `unit` (`name`, `symbol`) VALUES ('Stück', 'St.');
 
-INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`, `product`) 
+INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`, `product`)
     VALUES ('Euro', 'Cent', 1, NULL, 0);
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('Club-Mate', 'Flasche', 60, 'products/Loscher-Club-Mate.png');
@@ -69,6 +69,8 @@ INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('ICE-T', 'Flasche', 60, 'products/Loscher-ICE-T.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('Wintermate', 'Flasche', 60, 'products/Loscher-Winter-Mate.png');
+INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
+    VALUES ('Lapacho', 'Flasche', 60, 'products/Loscher-Lapacho.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)
     VALUES ('Mate-Cola', 'Flasche', 60, 'products/Loscher-Mate-Cola.png');
 INSERT INTO `valuable` (`name`, `unit_name`, `price`, `image_path`)

@@ -68,8 +68,7 @@ function numpadAppend(text) {
 }
 
 /**
- * Takes the existing value from the given element and appends the
- * given text.
+ * Takes the existing value and adds the given amount from text
  */
 function numpadAdd(text) {
   var element_id = numpadGetElement();

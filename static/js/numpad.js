@@ -68,6 +68,21 @@ function numpadAppend(text) {
 }
 
 /**
+ * Takes the existing value from the given element and appends the
+ * given text.
+ */
+function numpadAdd(text) {
+  var element_id = numpadGetElement();
+  var add_amount = parseInt(text);
+  var old_amount = parseInt( document.getElementById(element_id).value.replace(".", "") );
+  var new_amount = old_amount + add_amount;
+  var text_wo_dot = new_amount.toString();
+  var full_text = parseInt(text_wo_dot.substring(0, (text_wo_dot.length - 2)))
+                  + "." + text_wo_dot.substring(text_wo_dot.length - 2);
+  document.getElementById(element_id).value = full_text;
+}
+
+/**
  * Deletes the last character from the given element
  */
 function numpadBackspace() {

@@ -31,7 +31,7 @@ app.config.update(dict(
     UPLOAD_FOLDER = 'static/',
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif']),
     PROFILE_IMAGE_SIZE = (150, 200),
-    STORAGE_ACCOUNT = (4, 'Lager/Kühlschrank'),
+    STORAGE_ACCOUNT = (4, 'Lager+Kühlschrank'),
     CASH_IN_ACCOUNT = (1, 'FSI: Graue Kasse'),
     MONEY_VALUABLE_ID = 1,
     SECRET_KEY='development key',
@@ -103,6 +103,16 @@ def admin_index():
 
     return render_template('start.html', title="Benutzerübersicht", admin_panel=True, users=users)
 
+@app.route('/admin/lager', methods=['GET'])
+def admin_lagerbestand():
+    # return render_template('admin_lagerbestand.html', title="Lagerbestand", admin_panel=True )
+    # return redirect(url_for('edit_userprofile', username=app.config['STORAGE_ACCOUNT'][1]))
+    return redirect(url_for('admin_index'))
+
+@app.route('/admin/stats', methods=['GET'])
+def admin_stats():
+    return render_template('admin_statistiken.html', title="Statistiken", admin_panel=True )
+
 @app.route('/user/<username>')
 def show_userpage(username):
     db = get_db()
@@ -119,7 +129,7 @@ def show_userpage(username):
         'SELECT balance FROM account_valuable_balance WHERE account_id=? and valuable_id=?',
         [user['account_id'], app.config['MONEY_VALUABLE_ID']])
     user_balance = cur.fetchone()
-    cur = cur.execute('SELECT valuable.name AS name, price, unit_name, symbol, image_path FROM valuable, unit WHERE unit.name = valuable.unit_name AND product = 1')
+    cur = cur.execute('SELECT valuable.name AS name, active, price, unit_name, symbol, image_path FROM valuable, unit WHERE unit.name = valuable.unit_name AND product = 1')
     products = cur.fetchall()
     return render_template(
         'show_userpage.html', title="Getränkeliste", user=user, products=products, balance=user_balance,
@@ -251,6 +261,20 @@ def edit_userprofile(username):
 
         flash(u'Benutzerprofil erfolgreich aktualisiert!')
         return redirect(url_for('edit_userprofile', username=request.form['name']))
+
+@app.route('/user/active', methods=['POST', 'GET'])
+def activate_user():
+    if request.method == 'GET':
+        db = get_db()
+        db = db.execute( 'SELECT name, active, browsable FROM user WHERE browsable=1 ORDER BY name ASC' )
+        users = db.fetchall()
+        return render_template('activate_user.html', title="Benutzer (de)aktivieren", users=users, admin_panel=True)
+    else:  # request.method == 'POST'
+        db = get_db()
+        cur = db.cursor()
+        cur.execute( 'UPDATE user SET active = CASE WHEN active > 0 THEN 0 ELSE 1 END WHERE name=?', [request.form['toggle_user']] )
+        db.commit()
+        return redirect(url_for('admin_index'))
 
 @app.route('/user/add', methods=['POST', 'GET'])
 def add_user():

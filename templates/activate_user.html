@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block body %}
+{% if error %}<p class="error"><strong>Error:</strong> {{ error }}</p>{% endif %}
+
+<div class="activate_user">
+<form action="{{ url_for('activate_user') }}" method="post">
+  <select name="toggle_user">
+    {% for u in users %}
+      {% if u.active == 0 %}
+        <option value="{{ u.name }}">{{ u.name }} (inactive)</option>
+      {% else %}
+        <option value="{{ u.name }}">{{ u.name }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+  <input class="form_submit" type="submit" value="Toggle active status" />
+</form>
+</div>
+{% endblock %}

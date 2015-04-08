@@ -6,7 +6,7 @@ body {
 	height: 768px;
 	background: white;
 	color: #2e3436;
-    user-select: none !important;
+  user-select: none !important;
 }
 
 ::-webkit-scrollbar {
@@ -433,6 +433,36 @@ div.add_user dl dd input[type="file"] {
 	width: 307px;
 	padding: 0;
 	margin: 0;
+	text-align: center;
+	font-size: 14px;
+	color: #2e3436;
+}
+
+div.activate_user {
+	width: 432px;
+	height: calc( 35px + 2px + 5px );
+	padding: 10px;
+	margin: 50px auto;
+	border: 1px solid rgba(0,0,0,0.8);
+	border-radius: 5px;
+	background: rgba(0,0,0,0.8);
+}
+
+div.activate_user select {
+	float: left;
+}
+
+div.activate_user .form_submit {
+	color: black;
+	font-size: 22pt;
+	line-height: 35px;
+	height: 35px;
+	width: 200px;
+	display: block;
+	float: right;
+	padding: 0 10px;
+	margin: 5px 0;
+	border: 1px solid transparent;
 	text-align: center;
 	font-size: 14px;
 	color: #2e3436;

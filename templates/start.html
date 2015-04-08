@@ -14,7 +14,16 @@
       <span class="balance"></span>
     </div>
   </a>
-  <a href="#">
+  <a href="{{ url_for('activate_user', admin=admin_panel) }}">
+    <div class="user">
+      <span class="user-image">
+        <span class="new"><i class="fa fa-toggle-on"></i></span>
+      </span>
+      <span class="name">Nutzer Toggle</span>
+      <span class="balance"></span>
+    </div>
+  </a>
+  <a href="{{ url_for('admin_lagerbestand') }}">
     <div class="user">
       <span class="user-image">
         <span class="new"><i class="fa fa-server"></i></span>
@@ -23,7 +32,7 @@
       <span class="balance"></span>
     </div>
   </a>
-  <a href="#">
+  <a href="{{ url_for('admin_stats') }}">
     <div class="user">
       <span class="user-image">
         <span class="new"><i class="fa fa-bar-chart"></i></span>

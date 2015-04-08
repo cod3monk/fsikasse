@@ -43,17 +43,19 @@
 
 <div class="products" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 {% for prod in products %}
-  <a href="{{ url_for('action_buy', username=user.name, valuablename=prod.name) }}">
-    <div class="prod">
-      {% if prod.image_path %}
-      <img src="{{ url_for('static', filename=prod.image_path) }}" />
-      {% else %}
-      <img src="{{ url_for('static', filename='products/placeholder.png') }}" />
-      {% endif %}
-      <span class="prod_name">{{ prod.name }}</span>
-      <span class="price">{{ prod.price }}&cent;</span>
-    </div>
-  </a>
+  {% if prod.active == 1 %}
+    <a href="{{ url_for('action_buy', username=user.name, valuablename=prod.name) }}">
+      <div class="prod">
+        {% if prod.image_path %}
+        <img src="{{ url_for('static', filename=prod.image_path) }}" />
+        {% else %}
+        <img src="{{ url_for('static', filename='products/placeholder.png') }}" />
+        {% endif %}
+        <span class="prod_name">{{ prod.name }}</span>
+        <span class="price">{{ prod.price }}&cent;</span>
+      </div>
+    </a>
+  {% endif %}
 {% else %}
   <em>Unbelievable. No products here so far.</em>
 {% endfor %}

@@ -191,7 +191,7 @@ def transfer_money(username):
     db.commit()
 
     flash('Geld wurde überwiesen.')
-    return redirect(url_for('show_index'), title="Benutzerübersicht" )
+    return redirect(url_for('show_index'))
 
 @app.route('/user/<username>/profile', methods=['POST', 'GET'])
 def edit_userprofile(username):

@@ -80,14 +80,6 @@ a {
 	text-decoration: none;
 }
 
-.users-list {
-	position: absolute;
-	background: white;
-	height: 716px;
-	overflow-x: scroll;
-	overflow-y: scroll;
-}
-
 div.user {
 	float: left;
 	width: 150px;
@@ -129,6 +121,7 @@ div.user .balance {
 	line-height: 25px;
 	display: block;
 	position:relative;
+	border: 0;
 }
 
 div.user span.user-image {
@@ -276,6 +269,11 @@ div.products {
 	overflow-y: scroll;
 }
 
+div.lager {
+	margin-left: 10px;
+	width: 1014px;
+}
+
 div.main_wrapper .user {
 	margin: 10px 15px;
 }
@@ -318,8 +316,8 @@ div.prod .price {
 	display: block;
 }
 
-.products .balance,
-.products .history {
+.balance,
+.history {
 	font-size: 16px;
 	margin-left: 20px;
 	margin-bottom: 20px;
@@ -328,13 +326,13 @@ div.prod .price {
 	max-width: 666px;
 }
 
-.products .balance .number,
-.products .history .number {
+.balance .number,
+.history .number {
 	text-align: right;
 }
 
-.products .balance td,
-.products .history td {
+.balance td,
+.history td {
 	padding: 5px;
 	border: 1px solid rgb(161,161,161);
 }

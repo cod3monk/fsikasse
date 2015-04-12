@@ -105,8 +105,17 @@ def admin_index():
 
 @app.route('/admin/lager', methods=['GET'])
 def admin_lagerbestand():
-    # return render_template('admin_lagerbestand.html', title="Lagerbestand", admin_panel=True )
-    # return redirect(url_for('edit_userprofile', username=app.config['STORAGE_ACCOUNT'][1]))
+    db = get_db()
+    if request.method == 'GET':
+        cur = db.execute(
+            'SELECT valuable_name, balance, unit_name FROM account_valuable_balance WHERE account_id=?', [app.config['STORAGE_ACCOUNT'][0]])
+        balance = cur.fetchall()
+        cur = db.execute(
+            'SELECT `transaction`.rowid, comment, datetime, account_from.name AS from_name, from_id, account_to.name AS to_name, to_id, amount, valuable.unit_name, valuable.name AS valuable_name, valuable_id FROM `transaction` JOIN transfer ON `transaction`.rowid = transfer.transaction_id JOIN `valuable` ON transfer.valuable_id = valuable.rowid LEFT JOIN account AS account_from ON from_id = account_from.rowid LEFT JOIN account AS account_to ON to_id = account_to.rowid WHERE from_id = ? OR to_id = ?  ORDER BY strftime("%s", datetime) DESC',
+            [app.config['STORAGE_ACCOUNT'][0], app.config['STORAGE_ACCOUNT'][0]])
+        transactions = cur.fetchall()
+        return render_template('admin_lagerbestand.html', title="Übersicht " + app.config['STORAGE_ACCOUNT'][1], transactions=transactions, balance=balance)
+
     return redirect(url_for('admin_index'))
 
 @app.route('/admin/stats', methods=['GET'])

@@ -3,29 +3,7 @@
 
 <div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 
-<div class="side">
-  <a href="{{ url_for('edit_userprofile', username=user.name) }}">
-    <div class="user" style="height:auto;">
-      {% if user.image_path %}
-      <img src="{{ url_for('static', filename=user.image_path) }}" />
-      {% else %}
-      <img src="/static/users/default_user.jpg" />
-      {% endif %}
-      <span class="name">{{ user.name }}</span>
-    </div>
-  </a>
-
-  <form action="{{ url_for('edit_userprofile', username=user.name) }}" method="post" enctype="multipart/form-data">
-   <ul class="change_info">
-    <li>Name ändern:<input type="text" class="input_text" size="15" name="name" value="{{ user.name }}" /></li>
-    <li>EMail ändern:<input type="text" class="input_text" size="30" name="mail" value="{{ user.mail }}" /></li>
-    <li>Bild ändern:<input type="file" name="image" /></li>
-    <li><input class="input_update" type="submit" value="Update Profile" /></li>
-    <ul>
-  </form>
-</div>
-
-<div class="products">
+<div>
 
 <h2>Statistik:</h2>
 <table class="balance">
@@ -65,9 +43,9 @@
     <td class="number">{{ t.amount }}</td>
     <td>{{ t.unit_name }}</td>
     <td>{{ t.from_name}}</td>
-    <td> </td>
+    <td><i class="fa fa-long-arrow-right"></i></td>
     <td>{{ t.to_name }}</td>
-    <td><a href="{{ url_for('cancle_transaction', username=user.name, transaction_id=t.rowid)}}">Stornieren</a></td>
+    <td><a href="{{ url_for('cancle_transaction', username=t.to_name, transaction_id=t.rowid)}}">Stornieren</a></td>
   </tr>
   {% else %}
   <tr>

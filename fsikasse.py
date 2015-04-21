@@ -132,7 +132,7 @@ def show_userpage(username):
     user = cur.fetchone()
     if not user:
         abort(404)
-    cur = db.execute('SELECT name, image_path FROM user WHERE active=1 AND direct_payment=0 AND browsable=1 AND name!=?', [username])
+    cur = db.execute('SELECT name, image_path FROM user WHERE active=1 AND direct_payment=0 AND browsable=1 AND name!=? ORDER BY name', [username])
     user_list = cur.fetchall()
     cur = db.execute(
         'SELECT balance FROM account_valuable_balance WHERE account_id=? and valuable_id=?',

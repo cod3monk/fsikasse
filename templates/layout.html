@@ -48,12 +48,11 @@
 
 <div class="footer">
   {% if return_to_userpage == True %}
-  	<a href="{{ url_for('show_userpage', username=user.name) }}" class="back">
+  	<a href="{{ url_for('show_userpage', username=user.name) }}" class="back"><i class="fa fa-arrow-circle-o-left"></i> zurück</a>
   {% elif admin_panel == True %}
-    <a href="{{ url_for('admin_index') }}" class="back">
-  {% else %}
-  	<a href="{{ url_for('show_index') }}" class="back">
+    <a href="{{ url_for('admin_index') }}" class="back"><i class="fa fa-arrow-circle-o-left"></i> zurück</a>
+  {% elif return_to_index == True %}
+    <a href="{{ url_for('show_index') }}" class="back"><i class="fa fa-arrow-circle-o-left"></i> zurück</a>
   {% endif %}
-  	 <i class="fa fa-arrow-circle-o-left"></i> zurück</a>
 </div>
 </body>

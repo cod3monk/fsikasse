@@ -142,7 +142,7 @@ def show_userpage(username):
     products = cur.fetchall()
     return render_template(
         'show_userpage.html', title="Getränkeliste", user=user, products=products, balance=user_balance,
-        user_list=user_list)
+        user_list=user_list, return_to_index=True )
 
 @app.route('/user/<username>/buy/<valuablename>')
 def action_buy(username, valuablename):

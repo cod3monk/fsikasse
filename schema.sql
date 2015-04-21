@@ -55,8 +55,8 @@ INSERT INTO `account` (`rowid`, `name`) VALUES (6, 'Materialsammlung');
 
 INSERT INTO `user` (`name`, `account_id`, `browsable`, `direct_payment`, `allow_edit_profile`)
     VALUES ("Gäste", 5, 0, 1, 0);
-INSERT INTO `user` (`name`, `account_id`, `browsable`, `allow_edit_profile`)
-    VALUES ("Materialsammlung", 6, 0, 0);
+INSERT INTO `user` (`name`, `account_id`, `browsable`, `direct_payment`, `allow_edit_profile`)
+    VALUES ("Materialsammlung", 6, 0, 1, 0);
 
 INSERT INTO `unit` (`name`, `symbol`) VALUES ('Cent', '¢');
 INSERT INTO `unit` (`name`, `symbol`) VALUES ('Flasche', 'Fl.');

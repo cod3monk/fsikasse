@@ -118,6 +118,34 @@ def admin_lagerbestand():
 
     return redirect(url_for('admin_index'))
 
+@app.route('/admin/lieferung', methods=['GET', 'POST'])
+def admin_lieferung():
+    db = get_db()
+    cur = db.execute(
+            'SELECT valuable_name, valuable_id, balance, unit_name FROM account_valuable_balance WHERE account_id=? AND unit_name!=?', [app.config['STORAGE_ACCOUNT'][0],'Cent'])
+    valuable = cur.fetchall()
+
+    if request.method == 'GET':
+        return render_template('admin_lieferung.html', title="Neue Lieferung eintragen", admin_panel=True, valuable=valuable )
+
+    if request.method == 'POST':
+        for v in valuable:
+            modified_value = int(request.form[v['valuable_name']])
+            if modified_value is not 0:
+                modified_value = modified_value + v['balance']
+                # generate transaction
+                cur.execute('INSERT INTO `transaction` (comment, datetime) VALUES (?, ?)', ['Einzahlung Lieferung', datetime.now()])
+                transaction_id = cur.lastrowid
+                cur.execute('INSERT INTO transfer (from_id, to_id, valuable_id, amount, transaction_id) VALUES  (?, ?, ?, ?, ?)', [None, app.config['STORAGE_ACCOUNT'][0], int(v['valuable_id']), request.form[v['valuable_name']], transaction_id])
+                # cur.execute('INSERT INTO transfer (from_id, to_id, valuable_id, amount, transaction_id) VALUES  (?, ?, ?, ?, ?)', [app.config['STORAGE_ACCOUNT'][0], None, app.config['MONEY_VALUABLE_ID'], valuable['price'], transaction_id])
+                # save new amount
+                # cur.execute('UPDATE account_valuable_balance SET amount=? WHERE valuable_id = ?', [modified_value, int(v['valuable_id'])])
+                # commit to database
+                db.commit()
+
+        flash('Neue Lieferung entgegengenommen!')
+        return redirect(url_for('admin_index'))
+
 @app.route('/admin/stats', methods=['GET'])
 def admin_stats():
     return render_template('admin_statistiken.html', title="Statistiken", admin_panel=True )

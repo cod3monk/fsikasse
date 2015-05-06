@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+
+<div>
+
+<form action="{{ url_for('admin_lieferung', admin=admin_panel) }}" method="post">
+<table class="balance">
+  <tr>
+    <td>Ware</td>
+    <td>Menge (aktuell)</td>
+    <td>Einheit</td>
+    <td>Menge (Lieferung)</td>
+  </tr>
+  {% for v in valuable %}
+  <tr>
+    <td>{{ v.valuable_name }}</td>
+    <td class="number">{{ v.balance }}</td>
+    <td>{{ v.unit_name}}</td>
+    <td><input type="number" class="input_number" min="0" max="1000" step="1" name="{{ v.valuable_name }}" value="0" /></td>
+  </tr>
+  {% else %}
+  <tr>
+    <td><em>Unbelievable. No valueables here so far.</em></td>
+  </tr>
+  {% endfor %}
+  {% if valuable %}
+  <tr>
+    <td style="border:0;padding:1px;"></td>
+    <td style="border:0;padding:1px;"></td>
+    <td style="border:0;padding:1px;"></td>
+    <td style="border:0;padding:1px;"><input type="submit" style="float: none; margin: 0 auto;" value="Einzahlen"/></td>
+  </tr>
+  {% endif %}
+</table>
+</form>
+</div>
+
+<div class="bottom-big">
+    <a href="{{ url_for('show_userpage', admin=admin_panel, username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
+   <a href="{{ url_for('show_userpage', admin=admin_panel, username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
+</div>
+{% endblock %}

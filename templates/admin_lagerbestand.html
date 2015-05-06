@@ -5,6 +5,9 @@
 
 <div>
 
+<h2><a href="{{ url_for('admin_lieferung', admin=admin_panel) }}">Neue Lieferung eintragen</a></h2>
+
+
 <h2>Statistik:</h2>
 <table class="balance">
   <tr>
@@ -20,7 +23,7 @@
   </tr>
   {% else %}
   <tr>
-    <td><em>Unbelievable. No users here so far.</em></td>
+    <td><em>Unbelievable. No balances here so far.</em></td>
   </tr>
   {% endfor %}
 </table>

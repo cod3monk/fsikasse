@@ -3,6 +3,36 @@
 
 <div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 
+<h2>Transaktionsverlauf:</h2>
+<table class="history">
+  <tr>
+    <td>Datum</td>
+    <td>Ware</td>
+    <td>Menge</td>
+    <td>Einheit</td>
+    <td>Von</td>
+    <td></td>
+    <td>Zu</td>
+  </tr>
+  {% for t in transactions %}
+  <tr>
+    <td>{{ t.datetime }}</td>
+    <td>{{ t.valuable_name }}</td>
+    <td class="number">{{ t.amount }}</td>
+    <td>{{ t.unit_name }}</td>
+    <td>{{ t.from_name}}</td>
+    <td><i class="fa fa-long-arrow-right"></i></td>
+    <td>{{ t.to_name }}</td>
+    <td><a href="{{ url_for('cancle_transaction', username=t.to_name, transaction_id=t.rowid)}}">Stornieren</a></td>
+  </tr>
+  {% else %}
+  <tr>
+    <td><em>Unbelievable. No transactions here so far.</em></td>
+  </tr>
+  {% endfor %}
+</table>
+</div>
+
 </div>
 
 <div class="bottom-big">

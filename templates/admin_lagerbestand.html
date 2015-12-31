@@ -3,12 +3,9 @@
 
 <div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
 
-<div>
+<h2><i class="fa fa-truck"> </i> <a href="{{ url_for('admin_lieferung', admin=admin_panel) }}">Neue Lieferung eintragen</a></h2>
 
-<h2><a href="{{ url_for('admin_lieferung', admin=admin_panel) }}">Neue Lieferung eintragen</a></h2>
-
-
-<h2>Statistik:</h2>
+<h2>Aktueller Lagerbestand:</h2>
 <table class="balance">
   <tr>
     <td>Ware</td>
@@ -21,7 +18,13 @@
     <td>{{ b.valuable_name }}</td>
     <td class="number">{{ b.balance }}</td>
     <td>{{ b.unit_name}}</td>
-    <td><a class="fa fa-pencil" href="{{ url_for('admin_edit_item', item=b.valuable_name, admin=admin_panel) }}"> </a></td>
+    <td>
+      {% if b.valuable_name|string() == "Euro" %}
+      <i class="fa fa-money" />
+      {% else %}
+      <a class="fa fa-pencil" href="{{ url_for('admin_edit_item', admin=admin_panel, item_name=b.valuable_name, item_id=b.valuable_id) }}"> </a>
+      {% endif %}
+    </td>
   </tr>
   {% else %}
   <tr>
@@ -35,8 +38,4 @@
 
 </div>
 
-<div class="bottom-big">
-    <a href="{{ url_for('show_userpage', admin=admin_panel, username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
-   <a href="{{ url_for('show_userpage', admin=admin_panel, username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
-</div>
 {% endblock %}

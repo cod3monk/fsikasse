@@ -31,6 +31,7 @@ app.config.update(dict(
     UPLOAD_FOLDER = 'static/',
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif']),
     PROFILE_IMAGE_SIZE = (150, 200),
+    ITEM_IMAGE_SIZE = (150, 300),
     STORAGE_ACCOUNT = (4, 'Lager+Kühlschrank'),
     CASH_IN_ACCOUNT = (1, 'FSI: Graue Kasse'),
     MONEY_VALUABLE_ID = 1,
@@ -142,17 +143,60 @@ def admin_lieferung():
         flash('Neue Lieferung entgegengenommen!')
         return redirect(url_for('admin_index'))
 
-@app.route('/admin/edit_item', methods=['GET', 'POST'])
+@app.route('/admin/edit/<item_name>')
 def admin_edit_item(item_name):
     db = get_db()
-    cur = db.execute(
-            'SELECT valuable_name, valuable_id, balance, unit_name FROM account_valuable_balance WHERE valuable_name = item_name', [app.config['STORAGE_ACCOUNT'][0],'Cent'])
-    valuable = cur.fetchall()
-    if request.method == 'GET':
-        return render_template('admin_edit_item.html', title="Ware bearbeiten", admin_panel=True, item=valuable )
+    cur = db.execute( 'SELECT name, active, unit_name, price, image_path, product FROM valuable WHERE name=?', [item_name])
+    valuable = cur.fetchone()
+    return render_template('admin_edit_item.html', title="Ware bearbeiten", admin_panel=True, item=valuable )
 
-    # if request.method == 'POST':
-    #     return render_template('admin_edit_item.html', title="Ware bearbeiten", admin_panel=True )
+@app.route('/admin/edit/<item_name>/change_properties', methods=['POST'])
+def edit_item_properties(item_name):
+    db = get_db()
+    cur = db.execute( 'SELECT name, active, unit_name, price, image_path, product FROM valuable WHERE name=?', [item_name])
+    item = cur.fetchone()
+
+    print( request.form )
+
+    name      = request.form['name']      if request.form['name'] != ''      else item['name']
+    unit_name = request.form['unit_name'] if request.form['unit_name'] != '' else item['unit_name']
+    price     = request.form['price']
+    active    = False if not 'active' in request.form else request.form.get('active') == 'on'
+    product   = False if not 'product' in request.form else request.form.get('product') == 'on'
+
+    filename = item['image_path']
+    if request.files['image'] and request.files['image'].filename != '':
+        # Replace image
+        image = request.files['image']
+        assert image and allowed_file(image.filename), \
+            "No image given or invalid filename/extension."
+        filename = 'products/'+randomword(10)+'_'+secure_filename(image.filename)
+
+        # Resizing image with PIL
+        im = Image.open(image)
+
+        if im.size[0] > app.config['ITEM_IMAGE_SIZE'][0] or im.size[1] > app.config['ITEM_IMAGE_SIZE'][1]:
+            # cut/crop image if not 5:12 ratio
+            if float(im.size[0]) / float(im.size[1]) > 5.0/12.0: # crop width
+                new_width = int(im.size[0] * ( ( float(im.size[1]) * 5.0 )/ ( float(im.size[0]) * 12.0 ) ) )
+                left = int(im.size[0]/2 - new_width/2)
+                im = im.crop((left, 0, left + new_width, im.size[1]))
+                flash(u'Image had to be cropped to 5:12 ratio, sorry!')
+            elif float(im.size[0]) / float(im.size[1]) < 5.0/12.0: # crop height
+                new_height = int(im.size[1] * ( ( float(im.size[0]) * 12.0 )/ ( float(im.size[1]) * 5.0 ) ) )
+                top = int(im.size[1]/2 - new_height/2)
+                im = im.crop((0, top, im.size[0], top + new_height))
+                flash(u'Image had to be cropped to 5:12 ratio, sorry!')
+
+            im.thumbnail(app.config['ITEM_IMAGE_SIZE'], Image.ANTIALIAS)
+
+        im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    cur.execute('UPDATE valuable SET name=?, active=?, unit_name=?, price=?, image_path=?, product=? WHERE name=?',
+        [name, active, unit_name, price, filename, product, item['name']])
+    db.commit()
+
+    return redirect(url_for('admin_index'))
 
 
 @app.route('/admin/stats', methods=['GET'])

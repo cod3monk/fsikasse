@@ -156,8 +156,6 @@ def edit_item_properties(item_name):
     cur = db.execute( 'SELECT name, active, unit_name, price, image_path, product FROM valuable WHERE name=?', [item_name])
     item = cur.fetchone()
 
-    print( request.form )
-
     name      = request.form['name']      if request.form['name'] != ''      else item['name']
     unit_name = request.form['unit_name'] if request.form['unit_name'] != '' else item['unit_name']
     price     = request.form['price']
@@ -198,6 +196,56 @@ def edit_item_properties(item_name):
 
     return redirect(url_for('admin_index'))
 
+@app.route('/admin/add_item')
+def admin_add_item():
+    return render_template('admin_add_item.html', title="Ware hinzufügen", admin_panel=True )
+
+@app.route('/admin/add_item/new', methods=['POST'])
+def add_item():
+    if request.form['name'] == '' or request.form['name'] == 'New Item':
+        flash(u'Please specify a name!')
+        return redirect(url_for('admin_index'))
+    elif request.form['unit_name'] == '':
+        flash(u'Please specify a unit_name!')
+        return redirect(url_for('admin_index'))
+
+    active    = False if not 'active' in request.form else request.form.get('active') == 'on'
+    product   = False if not 'product' in request.form else request.form.get('product') == 'on'
+
+    filename = 'products/placeholder.png'
+    if request.files['image'] and request.files['image'].filename != '':
+        # Replace image
+        image = request.files['image']
+        assert image and allowed_file(image.filename), \
+            "No image given or invalid filename/extension."
+        filename = 'products/'+randomword(10)+'_'+secure_filename(image.filename)
+
+        # Resizing image with PIL
+        im = Image.open(image)
+
+        if im.size[0] > app.config['ITEM_IMAGE_SIZE'][0] or im.size[1] > app.config['ITEM_IMAGE_SIZE'][1]:
+            # cut/crop image if not 5:12 ratio
+            if float(im.size[0]) / float(im.size[1]) > 5.0/12.0: # crop width
+                new_width = int(im.size[0] * ( ( float(im.size[1]) * 5.0 )/ ( float(im.size[0]) * 12.0 ) ) )
+                left = int(im.size[0]/2 - new_width/2)
+                im = im.crop((left, 0, left + new_width, im.size[1]))
+                flash(u'Image had to be cropped to 5:12 ratio, sorry!')
+            elif float(im.size[0]) / float(im.size[1]) < 5.0/12.0: # crop height
+                new_height = int(im.size[1] * ( ( float(im.size[0]) * 12.0 )/ ( float(im.size[1]) * 5.0 ) ) )
+                top = int(im.size[1]/2 - new_height/2)
+                im = im.crop((0, top, im.size[0], top + new_height))
+                flash(u'Image had to be cropped to 5:12 ratio, sorry!')
+
+            im.thumbnail(app.config['ITEM_IMAGE_SIZE'], Image.ANTIALIAS)
+
+        im.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+
+    db = get_db()
+    db.execute('INSERT INTO valuable (name, active, unit_name, price, image_path, product) VALUES  (?, ?, ?, ?, ?, ?)',
+        [request.form['name'], active, request.form['unit_name'], request.form['price'], filename, product])
+    db.commit()
+
+    return redirect(url_for('admin_index'))
 
 @app.route('/admin/stats', methods=['GET'])
 def admin_stats():

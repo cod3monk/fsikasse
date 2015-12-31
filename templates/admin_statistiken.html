@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 
-<div class="main_wrapper" style="height:666px;" unselectable='on' onselectstart='return false;' onmousedown='return false;'>
+<div class="main_wrapper" style="height:666px;">
 
 <h2>Transaktionsverlauf:</h2>
 <table class="history">
@@ -35,8 +35,4 @@
 
 </div>
 
-<div class="bottom-big">
-    <a href="{{ url_for('show_userpage', admin=admin_panel, username='Gäste') }}"><div class="guest-account"><i class="fa fa-users"></i> Gäste</div></a>
-   <a href="{{ url_for('show_userpage', admin=admin_panel, username='Materialsammlung') }}"><div class="free-account"><i class="fa fa-files-o"></i> Materialsammlung</div></a>
-</div>
 {% endblock %}

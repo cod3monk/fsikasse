@@ -148,13 +148,19 @@ def admin_edit_item(item_name):
     db = get_db()
     cur = db.execute( 'SELECT name, active, unit_name, price, image_path, product FROM valuable WHERE name=?', [item_name])
     valuable = cur.fetchone()
-    return render_template('admin_edit_item.html', title="Ware bearbeiten", admin_panel=True, item=valuable )
+
+    cur = db.execute( 'SELECT * FROM unit' )
+    units = cur.fetchall()
+
+    return render_template('admin_edit_item.html', title="Ware bearbeiten", admin_panel=True, item=valuable, units=units )
 
 @app.route('/admin/edit/<item_name>/change_properties', methods=['POST'])
 def edit_item_properties(item_name):
     db = get_db()
     cur = db.execute( 'SELECT name, active, unit_name, price, image_path, product FROM valuable WHERE name=?', [item_name])
     item = cur.fetchone()
+
+    print(request.form)
 
     name      = request.form['name']      if request.form['name'] != ''      else item['name']
     unit_name = request.form['unit_name'] if request.form['unit_name'] != '' else item['unit_name']
@@ -198,7 +204,10 @@ def edit_item_properties(item_name):
 
 @app.route('/admin/add_item')
 def admin_add_item():
-    return render_template('admin_add_item.html', title="Ware hinzufügen", admin_panel=True )
+    db = get_db()
+    cur = db.execute( 'SELECT * FROM unit' )
+    units = cur.fetchall()
+    return render_template('admin_add_item.html', title="Ware hinzufügen", admin_panel=True, units=units )
 
 @app.route('/admin/add_item/new', methods=['POST'])
 def add_item():

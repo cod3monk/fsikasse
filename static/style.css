@@ -1,10 +1,8 @@
 
 body
 {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Open Sans', Sans, Calibri, Cantarelle, sans-serif;
 
-	width: 1024px;
-	height: 768px;
 	margin: 0;
 	padding: 0;
 
@@ -69,9 +67,9 @@ h2
 div.footer
 {
 	position: absolute;
-	top: 716px;
+	bottom: 0px;
 
-	width: 1024px;
+	width: 100%;
 	height: 50px;
 	margin: 0;
 	padding: 0;
@@ -133,17 +131,6 @@ div.user .name
 	color: rgba(255,255,255,.8);
 }
 
-div.side .user .name
-{
-	overflow: auto;
-
-	max-height: 300px;
-
-	white-space: normal;
-	text-overflow: clip;
-	word-wrap: break-word;
-}
-
 div.user .balance
 {
 	font-size: 18px;
@@ -195,8 +182,12 @@ div.side
 {
 	float: left;
 
-	width: 182px;
-	height: 651px;
+	width: 15%;
+	min-width: calc( 200px + 5px + 10px + 1px );
+
+	min-height: calc( 100vh - 52px - 51px );
+	max-height: calc( 100vh - 52px - 51px );
+
 	padding: 10px 5px 5px 5px;
 
 	border-right: 1px solid rgb(161,161,161);
@@ -222,13 +213,13 @@ div.side ul li
 	padding: 0 5px;
 
 	list-style-type: none;
+	width: calc( 100% - 2 * 5px );
 }
 
 div.side ul li form
 {
 	display: block;
 
-	width: 172px;
 	margin: 0;
 	padding: 0;
 }
@@ -239,7 +230,7 @@ select
 
 	display: block;
 
-	width: 172px;
+	width: 100%;
 	height: 35px;
 	margin: 5px 0 5px 0;
 }
@@ -252,10 +243,11 @@ input[type='text']
 	display: block;
 	float: left;
 
-	width: 65px;
+	width: calc(50% - 2px - 5px);
 	height: 33px;
 	margin: 0;
 	padding: 0;
+	margin-right: 5px;
 
 	text-align: center;
 
@@ -274,7 +266,7 @@ input[type='submit']
 	display: block;
 	float: right;
 
-	width: 100px;
+	width: 50%;
 	height: 35px;
 	margin: 0;
 	padding: 0;
@@ -304,6 +296,43 @@ input[type='text']
 	width: 100%;
 }
 
+div.side div.user
+{
+	float: left;
+
+	width: calc( 100% - 2px - 2 * 10px - 2* 5px );
+	/*height: calc(200px + 25px + 25px );*/
+	margin: 10px;
+	padding: 5px;
+
+	border: 1px solid rgba(0,0,0,.95);
+	border-radius: 5px;
+	background: rgba(0,0,0,.95);
+}
+
+div.side .user .name
+{
+	overflow: auto;
+
+	max-height: 300px;
+
+	white-space: normal;
+	text-overflow: clip;
+	word-wrap: break-word;
+}
+
+div.side div.user img
+{
+	display: block;
+	margin: 0 auto;
+
+	/* how to get 4:3 aspect ratio with 100% width?; */
+	/*width: calc( 100% );*/
+	height: 200px;
+
+	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, .2)));
+}
+
 div.side .change_info .form_input
 {
 	width: 172px;
@@ -329,8 +358,9 @@ div.main_wrapper
 	float: right;
 	overflow-y: scroll;
 
-	width: 1024px;
-	height: 666px;
+	width: 100%;
+	min-height: calc( 100vh - 51px - 52px );
+	max-height: calc( 100vh - 51px - 52px );
 	margin: 0;
 	padding: 0;
 }
@@ -341,10 +371,16 @@ div.products
 	float: right;
 	overflow-y: scroll;
 
-	width: 831px;
-	height: 666px;
+	width: calc(85% - 1px - 5px - 5px );
+	min-height: calc( 100vh - 51px - 52px );
+	max-height: calc( 100vh - 51px - 52px );
 	margin: 0;
 	padding: 0;
+}
+
+div.tableblock
+{
+	float: left;
 }
 
 div.lager
@@ -639,12 +675,12 @@ div.numpad
 	position: absolute;
 	z-index: 999;
 	top: 50px;
-	left: 192px;
+	right: 24px;
 
 	visibility: hidden;
 
-	width: 798px;
-	height: 656px;
+	width: calc( 85% - 25px - 10px - 10px );
+	height: calc( 100vh - 52px - 51px - 5px - 2px );
 	padding: 5px;
 
 	border: 0;
@@ -654,13 +690,18 @@ div.numpad
 
 div.numpad table
 {
-	position: relative;
-	top: 200px;
-	left: 200px;
+	position: relative;/*
+	top: calc( 50% - 2 * (5px+1px) );
+	left: calc ( 50% - 2 * (5px+1px) );*/
 
 	padding: 5px;
 
 	border: 1px solid #000;
 	border-radius: 2px;
 	background-color: #fff;
+}
+
+div.numpad .numpad-key
+{
+	min-width: 50px;
 }

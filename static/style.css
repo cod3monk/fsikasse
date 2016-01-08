@@ -1,27 +1,36 @@
-body {
+
+body
+{
 	font-family: 'Open Sans', sans-serif;
-	margin: 0;
-	padding: 0;
+
 	width: 1024px;
 	height: 768px;
-	background: white;
+	margin: 0;
+	padding: 0;
+
+	user-select: none !important;
+
 	color: #2e3436;
-  user-select: none !important;
+	background: white;
 }
 
-::-webkit-scrollbar {
-  background: white;
-  border-left: 1px solid rgb(161,161,161);
+::-webkit-scrollbar
+{
 	width: 24px;
+
+	border-left: 1px solid rgb(161,161,161);
+	background: white;
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb
+{
 	-webkit-border-radius: 5px;
-	background: rgba(0,0,0,0.95);
+	background: rgba(0,0,0,.95);
 }
 
-::-webkit-scrollbar-corner {
-    background: white;
+::-webkit-scrollbar-corner
+{
+	background: white;
 }
 
 /* all scrollbar targets for testing purposes
@@ -34,41 +43,51 @@ body {
 ::-webkit-resizer                { background: orange; }
 */
 
-h1 {
-	margin: 0;
-	padding: 0 20px;
-	background-image: -webkit-linear-gradient(90deg,#f8f8f8,#e0e0e0);
-	background-image: -moz-linear-gradient(90deg,#f8f8f8,#e0e0e0);
-	border-bottom: 1px solid rgb(161,161,161);
-	color: #2e3436;
+h1
+{
 	font-size: 20pt;
 	line-height: 50px;
-	height: 50px;
+
 	position: absolute
 	top: 0;
+
+	height: 50px;
+	margin: 0;
+	padding: 0 20px;
+
+	color: #2e3436;
+	border-bottom: 1px solid rgb(161,161,161);
+	background-image: -webkit-linear-gradient(90deg,#f8f8f8,#e0e0e0);
+	background-image:    -moz-linear-gradient(90deg,#f8f8f8,#e0e0e0);
 }
 
-h2 {
+h2
+{
 	padding-left: 20px;
 }
 
-div.footer {
-	height: 50px;
-	width: 1024px;
+div.footer
+{
 	position: absolute;
 	top: 716px;
+
+	width: 1024px;
+	height: 50px;
 	margin: 0;
 	padding: 0;
-	background: white;
+
 	border-top: 1px solid rgb(161,161,161);
+	background: white;
 }
 
 div.footer .back
 {
-	margin-left: 10px;
-	color: #2e3436;
 	font-size: 20px;
 	line-height: 50px;
+
+	margin-left: 10px;
+
+	color: #2e3436;
 }
 
 div.footer .back:hover
@@ -76,437 +95,572 @@ div.footer .back:hover
 	text-decoration: underline;
 }
 
-a {
+a
+{
 	text-decoration: none;
 }
 
-div.user {
+div.user
+{
 	float: left;
+
 	width: 150px;
 	height: calc(200px + 25px + 25px );
 	margin: 10px;
 	padding: 5px;
-	border: 1px solid rgba(0,0,0,0.95);
+
+	border: 1px solid rgba(0,0,0,.95);
 	border-radius: 5px;
-	background: rgba(0,0,0,0.95);
+	background: rgba(0,0,0,.95);
 }
 
-div.user .name {
-	text-align: center;
-	width: 100%;
-	max-height: 25px;
+div.user .name
+{
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 25px;
+
 	display: block;
 	overflow: hidden;
-	text-overflow: ellipsis;
+
+	width: 100%;
+	max-height: 25px;
+
+	text-align: center;
 	white-space: nowrap;
-	font-size: 18px;
-	line-height: 25px;
-	color: rgba(255,255,255,0.8);
-	font-weight: bold;
+	text-overflow: ellipsis;
+
+	color: rgba(255,255,255,.8);
 }
 
-div.side .user .name {
-	max-height: 300px;
+div.side .user .name
+{
 	overflow: auto;
-	text-overflow: clip;
+
+	max-height: 300px;
+
 	white-space: normal;
+	text-overflow: clip;
 	word-wrap: break-word;
 }
 
-div.user .balance {
-	float: right;
-	color: green;
+div.user .balance
+{
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 25px;
+
+	position: relative;
+
 	display: block;
-	position:relative;
+	float: right;
+
+	color: green;
 	border: 0;
 }
 
-div.user span.user-image {
+div.user span.user-image
+{
 	display: block;
+
 	width: 150px;
 	height: 200px;
 }
 
-div.user img {
+div.user img
+{
 	display: block;
+
 	width: 150px;
 	height: 200px;
-	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, 0.2)));
+
+	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, .2)));
 }
 
-div.user span.new {
+div.user span.new
+{
+	font-size: 100px;
+
 	display: block;
+
 	width: auto;
 	height: auto;
-	font-size: 100px;
+
 	text-align: center;
-	color: rgba(255,255,255,0.8);
+
+	color: rgba(255,255,255,.8);
 }
 
-div.side {
+div.side
+{
+	float: left;
+
 	width: 182px;
 	height: 651px;
-	float: left;
-	background-color: #fafafa;
-	border-right: 1px solid rgb(161,161,161);
 	padding: 10px 5px 5px 5px;
+
+	border-right: 1px solid rgb(161,161,161);
+	background-color: #fafafa;
 }
 
-div.side ul {
+div.side ul
+{
 	margin: 0;
 	padding: 0;
 }
 
 div.side ul li
 {
-	list-style-type: none;
-	display: block;
-	float:left;
-	padding: 0 5px;
-	margin: 0;
 	font-size: 20px;
 	line-height: 30px;
+
+	display: block;
+	float: left;
+
+	margin: 0;
 	margin-bottom: 20px;
+	padding: 0 5px;
+
+	list-style-type: none;
 }
 
 div.side ul li form
 {
+	display: block;
+
+	width: 172px;
 	margin: 0;
 	padding: 0;
-	display: block;
-	width: 172px;
 }
 
-select {
+select
+{
+	font-size: 14px;
+
 	display: block;
+
 	width: 172px;
 	height: 35px;
-	margin: 5px 0 5px 0px;
-	font-size: 14px;
+	margin: 5px 0 5px 0;
 }
 
-input[type="number"],
-input[type="text"] {
-	float: left;
+input[type='number'],
+input[type='text']
+{
+	font-size: 14px;
+
 	display: block;
+	float: left;
+
 	width: 65px;
 	height: 33px;
-	padding: 0;
 	margin: 0;
+	padding: 0;
+
 	text-align: center;
-	font-size: 14px;
+
 	color: black;
 	border: 1px solid rgb(190,190,190);
 	border-radius: 2px;
 	background: white;
-	box-shadow: 0px 1px white;
+	box-shadow: 0 1px white;
 }
 
-input[type="button"],
-input[type="submit"] {
-	float: right;
+input[type='button'],
+input[type='submit']
+{
+	font-size: 14px;
+
 	display: block;
+	float: right;
+
 	width: 100px;
 	height: 35px;
-	padding: 0;
 	margin: 0;
+	padding: 0;
+
 	text-align: center;
-	font-size: 14px;
+
 	color: black;
 	border: 1px solid rgb(190,190,190);
 	border-radius: 2px;
 	background: -webkit-linear-gradient(-90deg,rgb(247,247,247),rgb(220,220,220));
-	box-shadow: 0px 1px white;
+	box-shadow: 0 1px white;
 }
 
-input[type="submit"]:focus,
-input[type="submit"]:active {
+input[type='submit']:focus,
+input[type='submit']:active
+{
 	background: -webkit-linear-gradient(90deg,rgb(247,247,247),rgb(220,220,220));
 }
 
-.input_update {
+.input_update
+{
 	width: 172px !important;
 }
 
-input[type="text"] {
+input[type='text']
+{
 	width: 100%;
 }
 
-div.side .change_info .form_input {
+div.side .change_info .form_input
+{
 	width: 172px;
 }
 
-div.side .change_info .form_button {
-	width: 172px;
+div.side .change_info .form_button
+{
 	float: left;
+
+	width: 172px;
 }
 
-div.side .change_info span {
+div.side .change_info span
+{
 	display: block;
+
 	margin-bottom: 20px;
 }
 
-div.main_wrapper {
+div.main_wrapper
+{
+	display: block;
+	float: right;
+	overflow-y: scroll;
+
 	width: 1024px;
 	height: 666px;
-	float:right;
-	padding: 0;
 	margin: 0;
-	display: block;
-	overflow-y: scroll;
+	padding: 0;
 }
 
-div.products {
+div.products
+{
+	display: block;
+	float: right;
+	overflow-y: scroll;
+
 	width: 831px;
 	height: 666px;
-	float:right;
-	padding: 0;
 	margin: 0;
-	display: block;
-	overflow-y: scroll;
+	padding: 0;
 }
 
-div.lager {
-	margin-left: 10px;
+div.lager
+{
 	width: 1014px;
+	margin-left: 10px;
 }
 
-div.main_wrapper .user {
+div.main_wrapper .user
+{
 	margin: 10px 15px;
 }
 
-div.prod {
+div.prod
+{
 	float: left;
+
 	width: 125px;
 	height: calc(230px + 10px +10px + 25px + 25px );
 	margin: 10px;
 	padding: 5px;
-	border: 1px solid rgba(0,0,0,0.95);
+
+	border: 1px solid rgba(0,0,0,.95);
 	border-radius: 5px;
-	background: rgba(0,0,0,0.95);
+	background: rgba(0,0,0,.95);
 }
 
-.prod img {
-	width:  auto;
-	height:  230px;
+.prod img
+{
 	display: block;
+
+	width: auto;
+	height: 230px;
 	margin: 0 auto;
-	-webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, 0.2)));
+
+	-webkit-box-reflect: below 0 -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(80%, transparent) , to(rgba(250, 250, 250, .2)));
 }
 
-div.prod .prod_name {
-	text-align: center;
-	width: 100%;
-	display: block;
-	word-wrap: break-word;
+div.prod .prod_name
+{
 	font-size: 18px;
-	line-height: 25px;
-	color: rgba(255,255,255,0.8);
 	font-weight: bold;
+	line-height: 25px;
+
+	display: block;
+
+	width: 100%;
+
+	text-align: center;
+	word-wrap: break-word;
+
+	color: rgba(255,255,255,.8);
 }
 
-div.prod .price {
-	float: right;
-	color: white;
+div.prod .price
+{
 	font-size: 22px;
 	line-height: 25px;
+
 	display: block;
+	float: right;
+
+	color: white;
 }
 
 .balance,
-.history {
+.history
+{
 	font-size: 16px;
-	margin-left: 20px;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	border: 1px solid rgb(161,161,161);
+
 	max-width: 666px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+	margin-left: 20px;
+
+	border: 1px solid rgb(161,161,161);
 }
 
 .balance .number,
-.history .number {
+.history .number
+{
 	text-align: right;
 }
 
 .balance td,
-.history td {
+.history td
+{
 	padding: 5px;
+
 	border: 1px solid rgb(161,161,161);
 }
 
-div.bottom-big {
-	width: 100%;
+div.bottom-big
+{
 	position: absolute;
-	bottom: 0;
-	padding: 5px 0;
-	margin: 0;
-	background: transparent;
 	z-index: 999;
+	bottom: 0;
+
+	width: 100%;
+	margin: 0;
+	padding: 5px 0;
+
+	background: transparent;
 }
 
 div.bottom-big div.guest-account,
-div.bottom-big div.free-account {
+div.bottom-big div.free-account
+{
 	font-size: 26px;
 	line-height: 30px;
+
 	margin: 0;
 	padding: 5px 15px;
-	border: 1px solid rgba(0,0,0,0.95);
-	border-radius: 5px;
-	background: rgba(0,0,0,0.95);
+
 	color: white;
-	box-shadow: 0px 0px 1px 1px white;
+	border: 1px solid rgba(0,0,0,.95);
+	border-radius: 5px;
+	background: rgba(0,0,0,.95);
+	box-shadow: 0 0 1px 1px white;
 }
 
-div.bottom-big div.guest-account {
+div.bottom-big div.guest-account
+{
 	float: left;
+
 	margin-left: 20%;
 }
 
-div.bottom-big div.free-account {
+div.bottom-big div.free-account
+{
 	float: right;
+
 	margin-right: 20%;
 }
 
-div.add_user {
+div.add_user
+{
 	width: 432px;
 	height: calc( 3 * 45px + 50px + 5px );
-	padding: 10px;
 	margin: 50px auto;
-	border: 1px solid rgba(0,0,0,0.8);
+	padding: 10px;
+
+	border: 1px solid rgba(0,0,0,.8);
 	border-radius: 5px;
-	background: rgba(0,0,0,0.8);
+	background: rgba(0,0,0,.8);
 }
 
-div.add_user dl {
+div.add_user dl
+{
 	margin: 0;
 	padding: 0;
 }
 
-div.add_user dl dt {
-	color: white;
+div.add_user dl dt
+{
 	font-size: 16px;
 	line-height: 35px;
-	width: 105px;
+
 	display: block;
 	float: left;
+
+	width: 105px;
 	margin: 5px 0;
+
+	color: white;
 }
 
-div.add_user dl dd {
-	color: black;
+div.add_user dl dd
+{
 	font-size: 22pt;
-	display: block;
 	line-height: 35px;
-	height: 35px;
-	width: 307px;
+
+	display: block;
 	float: right;
+
+	width: 307px;
+	height: 35px;
 	margin: 5px 0;
 	padding: 0;
+
+	color: black;
 }
 
-div.add_user dl dd .form_input {
+div.add_user dl dd .form_input
+{
 	width: 307px;
 }
 
-div.add_user dl dd .form_submit {
-	float: right;
+div.add_user dl dd .form_submit
+{
+	font-size: 14px;
+
 	display: block;
+	float: right;
+
 	width: 100%;
 	height: 35px;
-	padding: 0;
 	margin: 0;
 	margin-top: 15px;
-	text-align: center;
-	font-size: 14px;
-	color: #2e3436;
-}
-
-div.add_user dl dd input[type="file"] {
-	display: block;
-	height: 35px;
-	line-height: 35px;
-	width: 307px;
 	padding: 0;
-	margin: 0;
+
 	text-align: center;
-	font-size: 14px;
+
 	color: #2e3436;
 }
 
-div.activate_user {
+div.add_user dl dd input[type='file']
+{
+	font-size: 14px;
+	line-height: 35px;
+
+	display: block;
+
+	width: 307px;
+	height: 35px;
+	margin: 0;
+	padding: 0;
+
+	text-align: center;
+
+	color: #2e3436;
+}
+
+div.activate_user
+{
 	width: 432px;
 	height: calc( 35px + 2px + 5px );
-	padding: 10px;
 	margin: 50px auto;
-	border: 1px solid rgba(0,0,0,0.8);
+	padding: 10px;
+
+	border: 1px solid rgba(0,0,0,.8);
 	border-radius: 5px;
-	background: rgba(0,0,0,0.8);
+	background: rgba(0,0,0,.8);
 }
 
-div.activate_user select {
+div.activate_user select
+{
 	float: left;
 }
 
-div.activate_user .form_submit {
-	color: black;
+div.activate_user .form_submit
+{
 	font-size: 22pt;
+	font-size: 14px;
 	line-height: 35px;
-	height: 35px;
-	width: 200px;
+
 	display: block;
 	float: right;
-	padding: 0 10px;
+
+	width: 200px;
+	height: 35px;
 	margin: 5px 0;
-	border: 1px solid transparent;
+	padding: 0 10px;
+
 	text-align: center;
-	font-size: 14px;
+
+	color: black;
 	color: #2e3436;
+	border: 1px solid transparent;
 }
 
-.flash {
-	background: rgb(74,144,217);
-	border: 1px solid rgb(211,211,211);
-	border-radius: 5px;
-	color: white;
+.flash
+{
+	font-size: 20pt;
+	line-height: 40px;
+
 	position: absolute;
 	top: 5px;
 	right: 5px;
+
+	float: right;
+
+	height: 40px;
 	margin: 0;
 	padding: 0 20px;
-	font-size: 20pt;
-	line-height: 40px;
-	height: 40px;
-	float: right;
+
+	color: white;
+	border: 1px solid rgb(211,211,211);
+	border-radius: 5px;
+	background: rgb(74,144,217);
 }
 
-.error {
-	background: #F0D6D6;
-	padding: 0.5em;
+.error
+{
+	padding: .5em;
+
+	background: #f0d6d6;
 }
 
-div.numpad {
-	visibility: hidden;
-	width: 798px;
-	height: 656px;
+div.numpad
+{
 	position: absolute;
+	z-index: 999;
 	top: 50px;
 	left: 192px;
+
+	visibility: hidden;
+
+	width: 798px;
+	height: 656px;
 	padding: 5px;
-	background-color: rgba(0,0,0,0.9);
+
 	border: 0;
-	border-radius: 0px;
-	z-index: 999;
+	border-radius: 0;
+	background-color: rgba(0,0,0,.9);
 }
 
-div.numpad table {
+div.numpad table
+{
 	position: relative;
-	left: 200px;
 	top: 200px;
-	background-color: #ffffff;
-	border: 1px solid #000000;
-	border-radius: 2px;
+	left: 200px;
+
 	padding: 5px;
+
+	border: 1px solid #000;
+	border-radius: 2px;
+	background-color: #fff;
 }

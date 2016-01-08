@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="main_wrapper" style="height:666px;">
+
+  <div class="prod" style="height:auto; float: left;">
+    <img src="{{ url_for('static', filename=item.image_path) }}" />
+    <span class="prod_name">{{ item.name }}</span>
+    <span class="price">{{ item.price }}&cent;</span>
+  </div>
+
+  <form action="{{ url_for('edit_item_properties', item_name=item.name) }}" method="post" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" size="15" name="name" value="{{ item.name }}" /></td>
+      </tr>
+      <tr>
+        <td>Price:</td>
+        <td>
+          <input type="number" min="0" max="100000" step="1" size="6" name="price" value="{{ item.price }}" /> &cent;
+        </td>
+      </tr>
+      <tr>
+        <td>Einheit:</td>
+        <td>
+          <select name="unit_name">
+            {% for u in units %}
+            <option {% if u.name == item.unit_name %}selected{% endif %}>{{ u.name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Image:</td>
+        <td><input type="file" name="image" /></td>
+      </tr>
+      <tr>
+        <td>Active:</td>
+        <td><input type="checkbox" name="active" {% if item.active %}checked{% endif %} /></td>
+      </tr>
+      <tr>
+        <td>Product:</td>
+        <td><input type="checkbox" name="product" {% if item.product %}checked{% endif %} /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input class="input_update" type="submit" value="Update Item" /></td>
+      </tr>
+    </table>
+  </form>
+
+</div>
+
+{% endblock %}

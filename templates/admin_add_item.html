@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="main_wrapper" style="height:666px;">
+
+  <div class="prod" style="height:auto; float: left;">
+    <img src="../static/products/placeholder.png" />
+    <span class="prod_name">New Item</span>
+    <span class="price"></span>
+  </div>
+
+  <form action="{{ url_for('add_item') }}" method="post" enctype="multipart/form-data">
+    <table>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" size="15" name="name" value="New Item" /></td>
+      </tr>
+      <tr>
+        <td>Price:</td>
+        <td>
+          <input type="number" min="0" max="100000" step="1" size="6" name="price" value="60" /> &cent;
+        </td>
+      </tr>
+      <tr>
+        <td>Einheit:</td>
+        <td>
+          <select name="unit_name">
+            {% for u in units %}
+            <option>{{ u.name }}</option>
+            {% endfor %}
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Image:</td>
+        <td><input type="file" name="image" /></td>
+      </tr>
+      <tr>
+        <td>Active:</td>
+        <td><input type="checkbox" name="active" /></td>
+      </tr>
+      <tr>
+        <td>Product:</td>
+        <td><input type="checkbox" name="product" checked /></td>
+      </tr>
+      <tr>
+        <td colspan="2"><input class="input_update" type="submit" value="Update Item" /></td>
+      </tr>
+    </table>
+  </form>
+
+</div>
+
+{% endblock %}

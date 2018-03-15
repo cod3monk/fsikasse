@@ -88,7 +88,7 @@ def allowed_file(filename):
 def show_index():
     db = get_db()
     db = db.execute(
-        'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ? ORDER BY balance DESC',
+        'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ? ORDER BY name ASC',
         [app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
@@ -282,7 +282,7 @@ def show_userpage(username):
         'SELECT balance FROM account_valuable_balance WHERE account_id=? and valuable_id=?',
         [user['account_id'], app.config['MONEY_VALUABLE_ID']])
     user_balance = cur.fetchone()
-    cur = cur.execute('SELECT valuable.name AS name, active, price, unit_name, symbol, image_path FROM valuable, unit WHERE unit.name = valuable.unit_name AND product = 1')
+    cur = cur.execute('SELECT valuable.name AS name, valuable.active, price+tax AS price, unit_name, symbol, valuable.image_path FROM valuable, unit, user WHERE unit.name = valuable.unit_name AND product = 1 AND user.name=?', [username])
     products = cur.fetchall()
     return render_template(
         'show_userpage.html', title="Getränkeliste", user=user, products=products, balance=user_balance,
@@ -298,8 +298,8 @@ def action_buy(username, valuablename):
     user = cur.fetchone()
     if not user:
         abort(404)
-
-    cur.execute('SELECT rowid, price FROM valuable WHERE product=1 and name=?', [valuablename])
+        
+    cur.execute('SELECT valuable.rowid, price+tax AS price FROM valuable, user WHERE product=1 and valuable.name=? and user.name=?', [valuablename, username])
     valuable = cur.fetchone()
     cur.execute('INSERT INTO `transaction` (datetime) VALUES (?)', [datetime.now()])
     transaction_id = cur.lastrowid
@@ -331,7 +331,7 @@ def transfer_money(username):
     if not user or not to_user:
         abort(404)
 
-    amount = int(float(request.form['amount'])*100)
+    amount = int(float(request.form['amount'])*100 + 0.5)
 
     if amount <= 0.0:
         flash(u'Keine Transaktion durchgeführt.')
@@ -489,7 +489,7 @@ def add_to_account(username):
     if not user:
         abort(404)
 
-    amount = int(float(request.form['amount'])*100)
+    amount = int(float(request.form['amount'])*100 + 0.5)
 
     if amount <= 0.0:
         flash(u'Keine Transaktion durchgeführt.')
@@ -521,7 +521,7 @@ def sub_from_account(username):
     if not user:
         abort(404)
 
-    amount = int(float(request.form['amount'])*100)
+    amount = int(float(request.form['amount'])*100 + 0.5)
 
     if amount <= 0.0:
         flash(u'Keine Transaktion durchgeführt.')
@@ -546,7 +546,7 @@ def sub_from_account(username):
 def cancle_transaction(username, transaction_id):
     db = get_db()
     cur = db.cursor()
-    cur.execute('SELECT account_id FROM user WHERE active=1 AND name=? AND direct_payment=0',
+    cur.execute('SELECT account_id FROM user WHERE active=1 AND name=?',
         [username])
     user = cur.fetchone()
 

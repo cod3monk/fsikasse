@@ -88,8 +88,13 @@ def allowed_file(filename):
 def show_index():
     db = get_db()
     db = db.execute(
-        'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ? ORDER BY name ASC',
-        [app.config['MONEY_VALUABLE_ID']])
+        """SELECT user.name AS name, image_path, balance, prio
+FROM user
+INNER JOIN account_valuable_balance AS avb ON user.account_id = avb.account_id
+LEFT JOIN ( SELECT to_id, COUNT(to_id) AS prio FROM (SELECT * FROM transfer ORDER BY transaction_id DESC LIMIT 2000) WHERE valuable_id != ? GROUP BY to_id ) ON ( to_id = avb.account_id )
+WHERE active=1 AND browsable=1 AND valuable_id = ?
+ORDER BY prio DESC, name ASC""",
+        [app.config['MONEY_VALUABLE_ID'], app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
     return render_template('start.html', title="Benutzerübersicht", users=users)
@@ -98,8 +103,13 @@ def show_index():
 def admin_index():
     db = get_db()
     db = db.execute(
-        'SELECT user.name AS name, image_path, balance FROM user, account_valuable_balance AS avb WHERE active=1 AND browsable=1 AND user.account_id = avb.account_id AND valuable_id = ? ORDER BY balance DESC',
-        [app.config['MONEY_VALUABLE_ID']])
+        """SELECT user.name AS name, image_path, balance, prio
+FROM user
+INNER JOIN account_valuable_balance AS avb ON user.account_id = avb.account_id
+LEFT JOIN ( SELECT to_id, COUNT(to_id) AS prio FROM (SELECT * FROM transfer ORDER BY transaction_id DESC LIMIT 2000) WHERE valuable_id != ? GROUP BY to_id ) ON ( to_id = avb.account_id )
+WHERE active=1 AND browsable=1 AND valuable_id = ?
+ORDER BY prio DESC, name ASC""",
+        [app.config['MONEY_VALUABLE_ID'], app.config['MONEY_VALUABLE_ID']])
     users = db.fetchall()
 
     return render_template('start.html', title="Benutzerübersicht", admin_panel=True, users=users)

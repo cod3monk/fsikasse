@@ -675,7 +675,7 @@ div.numpad
 {
 	position: absolute;
 	z-index: 999;
-	top: 50px;
+	top: 96px;
 	right: 24px;
 
 	visibility: hidden;
@@ -705,4 +705,31 @@ div.numpad table
 div.numpad .numpad-key
 {
 	min-width: 50px;
+}
+
+div.users
+{
+	display: block;
+	float: right;
+	overflow-y: scroll;
+
+	width: calc(85% - 1px - 5px - 5px );
+	min-height: calc( 100vh - 51px - 52px );
+	max-height: calc( 100vh - 51px - 52px );
+	margin: 0;
+	padding: 0;
+}
+
+div.users form select
+{
+	width: calc(100% - 2*5px);
+	margin: 5px;
+	min-height: calc( 100vh - 51px - 52px - 50px);
+	max-height: calc( 100vh - 51px - 52px - 50px);
+}
+
+div.users form input
+{
+	width: calc(50% - 3*5px);
+	margin: 5px;
 }

@@ -40,7 +40,7 @@
       </tr>
       {% else %}
       <tr>
-        <td><em>Unbelievable. No users here so far.</em></td>
+        <td><em>Unbelievable. No products here so far.</em></td>
       </tr>
       {% endfor %}
     </table>
@@ -51,6 +51,7 @@
     <table class="history">
       <tr>
         <td>Datum</td>
+        <td>Beschreibung</td>
         <td>Ware</td>
         <td>Menge</td>
         <td>Einheit</td>
@@ -61,6 +62,7 @@
       {% for t in transactions %}
       <tr>
         <td>{{ t.datetime }}</td>
+        <td>{{ t.comment }}</td>
         <td>{{ t.valuable_name }}</td>
         <td class="number">{{ t.amount }}</td>
         <td>{{ t.unit_name }}</td>

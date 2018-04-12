@@ -381,6 +381,8 @@ div.products
 div.tableblock
 {
 	float: left;
+	min-width: 33%;
+	max-width: 66%;
 }
 
 div.lager
@@ -452,7 +454,6 @@ div.prod .price
 {
 	font-size: 16px;
 
-	max-width: 666px;
 	margin-right: 20px;
 	margin-bottom: 20px;
 	margin-left: 20px;

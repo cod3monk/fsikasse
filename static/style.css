@@ -705,7 +705,9 @@ div.numpad table
 
 div.numpad .numpad-key
 {
-	min-width: 50px;
+	font-size: 30px;
+	min-width: 75px;
+	min-height: 75px;
 }
 
 div.users

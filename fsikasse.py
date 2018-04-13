@@ -382,11 +382,8 @@ def collect_money(username):
 
         # check all account_id
         sql='SELECT account_id FROM user WHERE active=1 and direct_payment=0 and account_id IN (%s)' 
-        print sql
         in_p = ', '.join(['?']*len(to_users))
-        print in_p
         sql = sql % in_p
-        print sql
         cur.execute(sql, to_users)
         if len(cur.fetchall()) != len(to_users):
             abort(403)

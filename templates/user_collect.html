@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/select.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<form action="{{ url_for('collect_money', username=user.name) }}" method="post">
+  <div class="side">
+    <div class="user" style="height:auto;">
+      {% if user.image_path %}
+      <img src="{{ url_for('static', filename=user.image_path) }}" /> {% else %}
+      <img src="/static/users/default_user.jpg" /> {% endif %}
+      <span class="name">{{ user.name }}</span>
+    </div>
+    <ul>
+      <li>Beschreibung:
+        <input type="text" name="comment" />
+      </li>
+      <li>Gesamtbetrag:
+        <input type="number" class="input_number" id="sub_from_account_amount" min="0" max="100" step="0.01" name="amount" value="0.00" onFocus="numpadShow(this.id);" />
+        <input type="submit" value="Einsammeln" />
+      </li>
+    </ul>
+  </div>
+
+  <div class="users">
+    <select multiple id="user_select" name="user_select">
+      {% for u in users %}
+      <option value="{{ u.account_id }}">{{ u.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
+{% endblock %}

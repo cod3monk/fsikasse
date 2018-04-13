@@ -37,6 +37,11 @@
         <input type="submit" value="Auszahlen" />
       </form>
     </li>
+    <li>Geld einsammeln:
+      <form action="{{ url_for('collect_money', username=user.name) }}" method="get">
+        <input type="submit" value="Einsammeln" />
+      </form>
+    </li>
     {% endif %}
   </ul>
 </div>

@@ -675,7 +675,7 @@ div.numpad
 {
 	position: absolute;
 	z-index: 999;
-	top: 96px;
+	top: 50px;
 	right: 24px;
 
 	visibility: hidden;
@@ -720,16 +720,11 @@ div.users
 	padding: 0;
 }
 
-div.users form select
+div.users select
 {
+	font-size: 30px;
 	width: calc(100% - 2*5px);
 	margin: 5px;
-	min-height: calc( 100vh - 51px - 52px - 50px);
-	max-height: calc( 100vh - 51px - 52px - 50px);
-}
-
-div.users form input
-{
-	width: calc(50% - 3*5px);
-	margin: 5px;
+	min-height: calc( 100vh - 51px - 52px - 10px);
+	max-height: calc( 100vh - 51px - 52px - 10px);
 }

@@ -371,10 +371,6 @@ def collect_money(username):
         return render_template('user_collect.html', title="Einsammeln " + user['name'], user=user, users=users, return_to_userpage=True)
     
     else:  # request.method == 'POST':
-        print request.form
-        # abort(501)
-        # return
-
         to_users = request.form.getlist('user_select')
         if len(to_users) == 0:
             flash(u'You need to specify some people.')
@@ -384,8 +380,18 @@ def collect_money(username):
             flash(u'Keine Transaktion durchgeführt.')
             return redirect(url_for('show_index'))
 
-
-        cur.execute('INSERT INTO `transaction` (comment, datetime) VALUES (?, ?)', ["Einsammeln", datetime.now()])
+        # check all account_id
+        sql='SELECT account_id FROM user WHERE active=1 and direct_payment=0 and account_id IN (%s)' 
+        print sql
+        in_p = ', '.join(['?']*len(to_users))
+        print in_p
+        sql = sql % in_p
+        print sql
+        cur.execute(sql, to_users)
+        if len(cur.fetchall()) != len(to_users):
+            abort(403)
+        
+        cur.execute('INSERT INTO `transaction` (comment, datetime) VALUES (?, ?)', ["Einsammeln von " + request.form['comment'], datetime.now()])
         transaction_id = cur.lastrowid
         for to_user in to_users:
             cur.execute('INSERT INTO transfer (from_id, to_id, valuable_id, amount, transaction_id) VALUES  (?, ?, ?, ?, ?)', [to_user, user['account_id'], app.config['MONEY_VALUABLE_ID'], amount, transaction_id])

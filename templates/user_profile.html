@@ -24,54 +24,59 @@
 </div>
 
 <div class="products">
+  <div class="tableblock">
+    <h2>Statistik:</h2>
+    <table class="balance">
+      <tr>
+        <td>Ware</td>
+        <td>Menge</td>
+        <td>Einheit</td>
+      </tr>
+      {% for b in balance %}
+      <tr>
+        <td>{{ b.valuable_name }}</td>
+        <td class="number">{{ b.balance }}</td>
+        <td>{{ b.unit_name}}</td>
+      </tr>
+      {% else %}
+      <tr>
+        <td><em>Unbelievable. No products here so far.</em></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
-<h2>Statistik:</h2>
-<table class="balance">
-  <tr>
-    <td>Ware</td>
-    <td>Menge</td>
-    <td>Einheit</td>
-  </tr>
-  {% for b in balance %}
-  <tr>
-    <td>{{ b.valuable_name }}</td>
-    <td class="number">{{ b.balance }}</td>
-    <td>{{ b.unit_name}}</td>
-  </tr>
-  {% else %}
-  <tr>
-    <td><em>Unbelievable. No users here so far.</em></td>
-  </tr>
-  {% endfor %}
-</table>
-
-<h2>Transaktionsverlauf:</h2>
-<table class="history">
-  <tr>
-    <td>Datum</td>
-    <td>Ware</td>
-    <td>Menge</td>
-    <td>Einheit</td>
-    <td>Von</td>
-    <td></td>
-    <td>Zu</td>
-  </tr>
-  {% for t in transactions %}
-  <tr>
-    <td>{{ t.datetime }}</td>
-    <td>{{ t.valuable_name }}</td>
-    <td class="number">{{ t.amount }}</td>
-    <td>{{ t.unit_name }}</td>
-    <td>{{ t.from_name}}</td>
-    <td> </td>
-    <td>{{ t.to_name }}</td>
-    <td><a href="{{ url_for('cancle_transaction', username=user.name, transaction_id=t.rowid)}}">Stornieren</a></td>
-  </tr>
-  {% else %}
-  <tr>
-    <td><em>Unbelievable. No transactions here so far.</em></td>
-  </tr>
-  {% endfor %}
-</table>
+  <div class="tableblock">
+    <h2>Transaktionsverlauf:</h2>
+    <table class="history">
+      <tr>
+        <td>Datum</td>
+        <td>Beschreibung</td>
+        <td>Ware</td>
+        <td>Menge</td>
+        <td>Einheit</td>
+        <td>Von</td>
+        <td></td>
+        <td>Zu</td>
+      </tr>
+      {% for t in transactions %}
+      <tr>
+        <td>{{ t.datetime }}</td>
+        <td>{{ t.comment }}</td>
+        <td>{{ t.valuable_name }}</td>
+        <td class="number">{{ t.amount }}</td>
+        <td>{{ t.unit_name }}</td>
+        <td>{{ t.from_name}}</td>
+        <td> </td>
+        <td>{{ t.to_name }}</td>
+        <td><a href="{{ url_for('cancle_transaction', username=user.name, transaction_id=t.rowid)}}">Stornieren</a></td>
+      </tr>
+      {% else %}
+      <tr>
+        <td><em>Unbelievable. No transactions here so far.</em></td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 {% endblock %}
